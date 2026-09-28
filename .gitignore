@@ -103,10 +103,9 @@ logs/
 *.sqlite3
 *.db
 *.db-journal
-/data
-/uploads/
-/vector_store/
-/chroma_db/
-/temp/
-/tmp/
+uploads/
+vector_store/
+chroma_db/
+temp/
+tmp/
 

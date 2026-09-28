@@ -1,0 +1,42 @@
+[
+  {
+    "material_code": "STL-RB-400E-20",
+    "material_name": "热轧带肋钢筋",
+    "specification": "HRB400E Φ20mm",
+    "category": "建筑钢材",
+    "unit": "吨",
+    "standard_price": 4000.00,
+    "guide_price": 4000.00,
+    "aliases": ["18螺纹", "20螺纹", "400E 20圆钢", "20厘螺纹钢", "400E螺纹钢20"]
+  },
+  {
+    "material_code": "STL-PL-Q235-10",
+    "material_name": "普碳钢板",
+    "specification": "Q235B 10*1500*6000",
+    "category": "建筑钢材",
+    "unit": "吨",
+    "standard_price": 4200.00,
+    "guide_price": 4200.00,
+    "aliases": ["10个厚", "Q235中板", "10厘板", "10厚普板"]
+  },
+  {
+    "material_code": "PIP-SM-20G-57",
+    "material_name": "无缝钢管",
+    "specification": "20G Φ57*3.5",
+    "category": "工业管材",
+    "unit": "米",
+    "standard_price": 120.00,
+    "guide_price": 120.00,
+    "aliases": ["57管", "20G无缝管", "57无缝钢管", "57小口径管"]
+  },
+  {
+    "material_code": "VLV-GT-Z41H-50",
+    "material_name": "铸钢法兰闸阀",
+    "specification": "Z41H-16C DN50",
+    "category": "阀门管件",
+    "unit": "台",
+    "standard_price": 360.00,
+    "guide_price": 360.00,
+    "aliases": ["50闸阀", "高压50法兰闸阀", "DN50铸钢闸阀"]
+  }
+]

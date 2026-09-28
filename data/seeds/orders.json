@@ -1,0 +1,130 @@
+[
+  {
+    "order_no": "XSDD-YD-20260920-001",
+    "source_draft_id": "DFT-20260920-001",
+    "order_type": "SALES",
+    "contract_no": "2026-WZ-090",
+    "counterparty_name": "华夏石化销售集团",
+    "project_name": "苏州轨道交通 8 号线 3 标",
+    "delivery_address": "苏州市相城区中兴路 168 号中铁建设盾构基地",
+    "contact_person": "周工 13811223344",
+    "items": [
+      {
+        "item_seq": 1,
+        "material_code": "PIP-SM-20G-57",
+        "material_name": "无缝钢管",
+        "specification": "20G Φ57*3.5",
+        "quantity": 3000.0,
+        "unit": "米",
+        "unit_price": 120.00,
+        "total_amount": 360000.00
+      }
+    ],
+    "total_amount": 360000.00,
+    "erp_status": "AUDITED",
+    "is_special_approved": false,
+    "special_approval_reason": null,
+    "operator_name": "李强",
+    "operator_dept": "物资贸易一部",
+    "approver_name": "系统自动核准",
+    "approval_comment": "额度充足，正常提单自动审核通过",
+    "created_at": "2026-09-20T08:30:00Z",
+    "updated_at": "2026-09-20T08:30:00Z"
+  },
+  {
+    "order_no": "XSDD-YD-20260925-002",
+    "source_draft_id": "DFT-20260925-002",
+    "order_type": "SALES",
+    "contract_no": "2026-WZ-089",
+    "counterparty_name": "远大钢铁销售总公司",
+    "project_name": "科技城数字经济产业园一期项目",
+    "delivery_address": "苏州市高新区科技城 1 号工地物资中转站",
+    "contact_person": "张总 13912345678",
+    "items": [
+      {
+        "item_seq": 1,
+        "material_code": "STL-RB-400E-20",
+        "material_name": "热轧带肋钢筋",
+        "specification": "HRB400E Φ20mm",
+        "quantity": 200.0,
+        "unit": "吨",
+        "unit_price": 4000.00,
+        "total_amount": 800000.00
+      }
+    ],
+    "total_amount": 800000.00,
+    "erp_status": "PENDING_APPROVAL",
+    "is_special_approved": true,
+    "special_approval_reason": "现场工期提前追加采购，超出当前合同剩余可用额度(¥150,000.00)",
+    "operator_name": "李强",
+    "operator_dept": "物资贸易一部",
+    "approver_name": null,
+    "approval_comment": null,
+    "created_at": "2026-09-25T10:15:00Z",
+    "updated_at": "2026-09-25T10:15:00Z"
+  },
+  {
+    "order_no": "XSDD-YD-20260910-003",
+    "source_draft_id": "DFT-20260910-003",
+    "order_type": "SALES",
+    "contract_no": "2026-WZ-090",
+    "counterparty_name": "华夏石化销售集团",
+    "project_name": "苏州轨道交通 8 号线 3 标",
+    "delivery_address": "苏州市相城区中兴路 168 号中铁建设盾构基地",
+    "contact_person": "周工 13811223344",
+    "items": [
+      {
+        "item_seq": 1,
+        "material_code": "VLV-GT-Z41H-50",
+        "material_name": "铸钢法兰闸阀",
+        "specification": "Z41H-16C DN50",
+        "quantity": 500.0,
+        "unit": "台",
+        "unit_price": 360.00,
+        "total_amount": 180000.00
+      }
+    ],
+    "total_amount": 180000.00,
+    "erp_status": "CLOSED",
+    "is_special_approved": false,
+    "special_approval_reason": null,
+    "operator_name": "李强",
+    "operator_dept": "物资贸易一部",
+    "approver_name": "王总",
+    "approval_comment": "已完成现场进场验收签章，单据归档闭环",
+    "created_at": "2026-09-10T09:00:00Z",
+    "updated_at": "2026-09-18T17:00:00Z"
+  },
+  {
+    "order_no": "XSDD-YD-20260915-004",
+    "source_draft_id": "DFT-20260915-004",
+    "order_type": "SALES",
+    "contract_no": "2025-WZ-012",
+    "counterparty_name": "中原特钢实业有限公司",
+    "project_name": "郑州保税物流仓储扩建工程",
+    "delivery_address": "郑州市经济技术开发区经南三路 88 号",
+    "contact_person": "赵主管 13700001122",
+    "items": [
+      {
+        "item_seq": 1,
+        "material_code": "STL-PL-Q235-10",
+        "material_name": "普碳钢板",
+        "specification": "Q235B 10*1500*6000",
+        "quantity": 100.0,
+        "unit": "吨",
+        "unit_price": 4200.00,
+        "total_amount": 420000.00
+      }
+    ],
+    "total_amount": 420000.00,
+    "erp_status": "REJECTED",
+    "is_special_approved": true,
+    "special_approval_reason": "加急备料申报",
+    "operator_name": "王芳",
+    "operator_dept": "物资贸易二部",
+    "approver_name": "陈总监",
+    "approval_comment": "关联合同已于 2025 年底失效过期，禁止提报生效，已驳回作废。",
+    "created_at": "2026-09-15T14:20:00Z",
+    "updated_at": "2026-09-15T16:00:00Z"
+  }
+]
