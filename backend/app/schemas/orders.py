@@ -100,7 +100,18 @@ class OrderSubmitResponseData(BaseModel):
 
 
 class OrderApprovalRequest(BaseModel):
-    decision: Literal["PASS", "RETURN", "REJECT"] = Field(..., description="审批裁决：PASS/RETURN/REJECT")
-    comment: str = Field(..., min_length=2, max_length=300, description="审批签署意见")
-    approver_name: str = Field(..., description="审批人姓名")
-    approver_dept: Optional[str] = Field("商贸风控审批部", description="审批人所属部门")
+    action: Optional[Literal["APPROVE", "REJECT", "PASS", "RETURN"]] = Field(None, description="审批动作: APPROVE/REJECT")
+    decision: Optional[Literal["PASS", "RETURN", "REJECT", "APPROVE"]] = Field(None, description="审批裁决: PASS/RETURN/REJECT")
+    comment: Optional[str] = Field("审批处理", description="审批签署意见")
+    approver_name: Optional[str] = Field(None, description="审批人姓名 (可从Header注入)")
+    approver_dept: Optional[str] = Field(None, description="审批人部门 (可从Header注入)")
+    approver_role: Optional[str] = Field(None, description="审批人角色 (可从Header注入)")
+
+
+class OrderApprovalResponseData(BaseModel):
+    order_no: str = Field(..., description="商贸单据号")
+    order_status: str = Field(..., description="订单最新状态 (ACTIVE/REJECTED/RETURNED)")
+    decision: str = Field(..., description="审批最终裁决")
+    approver_name: str = Field(..., description="审批人")
+    approval_comment: Optional[str] = Field(None, description="审批批注意见")
+    approved_at: str = Field(..., description="审批完成时间 (ISO-8601)")

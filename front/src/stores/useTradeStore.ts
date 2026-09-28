@@ -15,8 +15,8 @@ const defaultDraft: OrderDraft = {
   is_over_quota: false,
   special_approval_reason: '',
   order_status: 'DRAFT',
-  operator_name: '业务经办人',
-  operator_dept: '物资贸易一部',
+  operator_name: '张明',
+  operator_dept: '物资贸易二部',
 };
 
 const defaultQuota: ContractQuota = {
@@ -57,9 +57,15 @@ interface TradeState {
   setIsLoading: (loading: boolean) => void;
   activeDrawerOrderNo: string | null;
   setActiveDrawerOrderNo: (orderNo: string | null) => void;
+
+  // 当前用户角色身份：经办人 vs 审批主管 vs 管理员
+  currentUserRole: 'OPERATOR' | 'APPROVER' | 'ADMIN';
+  setCurrentUserRole: (role: 'OPERATOR' | 'APPROVER' | 'ADMIN') => void;
 }
 
 export const useTradeStore = create<TradeState>((set) => ({
+  currentUserRole: 'OPERATOR',
+  setCurrentUserRole: (currentUserRole) => set({ currentUserRole }),
   displayMode: 'fullscreen',
   setDisplayMode: (displayMode) => set({ displayMode }),
   toggleDisplayMode: () =>

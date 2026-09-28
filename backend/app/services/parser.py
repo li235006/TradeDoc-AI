@@ -57,7 +57,7 @@ class OrderParserService:
             quantity = float(qty_match.group(1))
             unit = qty_match.group(2)
         else:
-            quantity = 100.0
+            quantity = 0.0
             unit = "吨"
 
         # 3. 提取单价 (若有)
@@ -122,7 +122,7 @@ class OrderParserService:
             if "物资名称" in line or "品名" in line:
                 return line.split("：")[-1].split(":")[-1].strip()
 
-        return "螺纹钢"
+        return ""
 
     async def parse_chat(
         self,
@@ -133,28 +133,24 @@ class OrderParserService:
     ) -> ParseResultData:
         """两阶段文本提单解析管道：实体抽取 -> 向量对齐 -> 规则核验"""
         extracted = self.extract_entities_from_text(text)
-        contract_no = extracted["contract_no"] or contract_no_hint
-
-        # 若依然无法确定合同编号，查询默认可用合同
-        if not contract_no:
-            first_contract = await db.contracts.find_one({"status": "ACTIVE"})
-            if first_contract:
-                contract_no = first_contract["contract_no"]
-            else:
-                contract_no = "2026-WZ-089"
+        contract_no = extracted["contract_no"] or contract_no_hint or ""
 
         # 阶段二：调用 Milvus 向量近似对齐
         raw_mat = extracted["raw_material"]
-        align_res = semantic_service.align_material(raw_mat)
+        align_res = semantic_service.align_material(raw_mat) if raw_mat else None
 
-        material_code = align_res.material_code or "STL-RB-400E-20"
-        material_name = align_res.material_name
-        specification = align_res.specification or "HRB400E Φ20mm"
-        
-        # 若文本中未提供单价，采用标准指导基准价
-        unit_price = extracted["unit_price"] if extracted["unit_price"] is not None else align_res.standard_price
-        if unit_price <= 0:
-            unit_price = 4000.0
+        if align_res and align_res.material_code:
+            material_code = align_res.material_code
+            material_name = align_res.material_name
+            specification = align_res.specification or ""
+            match_status = align_res.match_status
+            unit_price = extracted["unit_price"] if extracted["unit_price"] is not None else align_res.standard_price
+        else:
+            material_code = ""
+            material_name = raw_mat or "待确认物资"
+            specification = ""
+            match_status = "UNMATCHED"
+            unit_price = extracted["unit_price"] if extracted["unit_price"] is not None else 0.0
 
         quantity = extracted["quantity"]
         total_item_amount = round(quantity * unit_price, 2)
@@ -168,34 +164,34 @@ class OrderParserService:
             unit=extracted["unit"],
             unit_price=unit_price,
             total_amount=total_item_amount,
-            match_status=align_res.match_status,
+            match_status=match_status,
             raw_material=raw_mat,
         )
 
         # 读取合同基础信息
-        contract_doc = await db.contracts.find_one({"contract_no": contract_no})
+        contract_doc = await db.contracts.find_one({"contract_no": contract_no}) if contract_no else None
         if contract_doc:
-            counterparty_name = contract_doc.get("counterparty_name", "中建八局第一建设有限公司")
-            project_name = contract_doc.get("project_name", "科技城数字经济产业园一期项目")
+            counterparty_name = contract_doc.get("counterparty_name", "")
+            project_name = contract_doc.get("project_name", "")
             delivery_address = extracted["delivery_address"] or contract_doc.get(
-                "default_delivery_address", "苏州市高新区科技城 1 号工地物资中转站"
+                "default_delivery_address", ""
             )
-            c_total = contract_doc.get("total_amount", 5000000.0)
-            c_accum_amount = contract_doc.get("accumulated_amount", 4850000.0)
+            c_total = contract_doc.get("total_amount", 0.0)
+            c_accum_amount = contract_doc.get("accumulated_amount", 0.0)
             c_rem_amount = round(c_total - c_accum_amount, 2)
-            c_max_orders = contract_doc.get("max_order_count", 20)
-            c_accum_orders = contract_doc.get("accumulated_order_count", 18)
+            c_max_orders = contract_doc.get("max_order_count", 0)
+            c_accum_orders = contract_doc.get("accumulated_order_count", 0)
             c_rem_orders = max(0, c_max_orders - c_accum_orders)
         else:
-            counterparty_name = "往来签约单位"
-            project_name = "工程项目"
-            delivery_address = extracted["delivery_address"] or "苏州市高新区工地物资中转站"
-            c_total = 5000000.0
+            counterparty_name = ""
+            project_name = ""
+            delivery_address = extracted["delivery_address"] or ""
+            c_total = 0.0
             c_accum_amount = 0.0
-            c_rem_amount = 5000000.0
-            c_max_orders = 20
+            c_rem_amount = 0.0
+            c_max_orders = 0
             c_accum_orders = 0
-            c_rem_orders = 20
+            c_rem_orders = 0
 
         # 阶段三：对接合规风控规则引擎
         compliance_req = ComplianceVerifyRequest(
@@ -210,14 +206,14 @@ class OrderParserService:
                     unit=extracted["unit"],
                     unit_price=unit_price,
                     total_amount=total_item_amount,
-                    match_status=align_res.match_status,
+                    match_status=match_status,
                 )
             ],
             total_amount=total_item_amount,
         )
         compliance_result = await compliance_engine.verify(compliance_req, db)
 
-        is_over = compliance_result.over_amount > 0 or total_item_amount > c_rem_amount
+        is_over = compliance_result.over_amount > 0 or (c_rem_amount > 0 and total_item_amount > c_rem_amount)
         over_val = compliance_result.over_amount if compliance_result.over_amount > 0 else round(max(0.0, total_item_amount - c_rem_amount), 2)
 
         draft = OrderDraft(
@@ -248,7 +244,13 @@ class OrderParserService:
         )
 
         # 生成经办人业务澄清/提示话术
-        if is_over:
+        if not contract_no:
+            clarification = "未识别到关联合同编号，请先选择或补充合同编号。"
+        elif quantity <= 0:
+            clarification = "未在文本中识别出有效采购数量，需人工确认并补全数量。"
+        elif match_status == "UNMATCHED":
+            clarification = f"物资品名 [{raw_mat or '未知'}] 未匹配到标准物料主档，请人工核实编码。"
+        elif is_over:
             clarification = (
                 f"检测到本次提单金额 (¥{total_item_amount:,.2f}) 超出合同剩余可用额度 (¥{c_rem_amount:,.2f})，"
                 f"差额 ¥{over_val:,.2f}，已为您触发超额特批流程。"

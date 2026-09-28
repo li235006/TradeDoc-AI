@@ -62,6 +62,17 @@ class ComplianceEngine:
                 fatal_blocked = True
                 continue
 
+            if item.quantity <= 0:
+                rule_hits.append(
+                    RuleHitItem(
+                        rule_code="RULE_QUANTITY_INVALID",
+                        rule_name="数量有效性核验",
+                        level="WARNING",
+                        message=f"物资明细第 {item.item_seq} 行[{item.material_name or '待确认'}]数量未填或为0，需人工核对补充",
+                        details={"item_seq": item.item_seq, "quantity": item.quantity},
+                    )
+                )
+
             # 数据库核验物料编码真实存在
             material_doc = await db.materials.find_one({"material_code": item.material_code})
             if not material_doc:
@@ -82,19 +93,21 @@ class ComplianceEngine:
                 std_price = material_doc.get("standard_price", 0.0)
                 if std_price > 0:
                     deviation = (item.unit_price - std_price) / std_price
-                    if deviation > self.PRICE_DEVIATION_WARN_THRESHOLD:
+                    if abs(deviation) > self.PRICE_DEVIATION_WARN_THRESHOLD:
                         dev_percent = round(deviation * 100, 1)
-                        if dev_percent > max_deviation_rate:
-                            max_deviation_rate = dev_percent
+                        if abs(dev_percent) > max_deviation_rate:
+                            max_deviation_rate = abs(dev_percent)
 
+                        rule_name = "物资单价高价预警" if deviation > 0 else "物资单价低价预警"
+                        direction = "高于" if deviation > 0 else "低于"
                         rule_hits.append(
                             RuleHitItem(
                                 rule_code="RULE_PRICE_DEVIATION",
-                                rule_name="物资单价高价预警",
+                                rule_name=rule_name,
                                 level="WARNING",
                                 message=(
                                     f"物资[{material_doc.get('material_name')}]单价 (¥{item.unit_price:,.2f}) "
-                                    f"高于指导价 (¥{std_price:,.2f})，偏离度 +{dev_percent}%，超出 15% 预警阈值"
+                                    f"{direction}指导价 (¥{std_price:,.2f})，偏离度 {dev_percent:+}%，超出 ±15% 预警阈值"
                                 ),
                                 details={
                                     "material_code": item.material_code,

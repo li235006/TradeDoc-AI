@@ -40,6 +40,39 @@ async def list_contracts(
     }
 
 
+@router.get("/contracts/{contract_no}/quota", summary="获取单笔合同额度详情与可用余额")
+async def get_contract_quota(
+    contract_no: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+):
+    """
+    合同额度查询端点：
+    返回 { contract_no, total_amount, accumulated_amount, remaining_amount, utilization_rate, is_over_quota }
+    """
+    contract = await db.erp_contracts.find_one({"contract_no": contract_no}, {"_id": 0})
+    if not contract:
+        raise BusinessException(message=f"合同 {contract_no} 不存在", code=400)
+
+    total_amount = round(float(contract.get("total_amount", 0.0)), 2)
+    accumulated_amount = round(float(contract.get("accumulated_amount", 0.0)), 2)
+    remaining_amount = round(float(contract.get("remaining_amount", total_amount - accumulated_amount)), 2)
+    utilization_rate = round(accumulated_amount / total_amount * 100, 2) if total_amount > 0 else 0.0
+    is_over_quota = accumulated_amount > total_amount or remaining_amount < 0
+
+    return {
+        "code": 200,
+        "message": "获取合同额度详情成功",
+        "data": {
+            "contract_no": contract["contract_no"],
+            "total_amount": total_amount,
+            "accumulated_amount": accumulated_amount,
+            "remaining_amount": remaining_amount,
+            "utilization_rate": utilization_rate,
+            "is_over_quota": is_over_quota,
+        },
+    }
+
+
 @router.get("/contracts/{contract_no}", summary="获取单笔合同履约详情与可用额度")
 async def get_contract_detail(
     contract_no: str,

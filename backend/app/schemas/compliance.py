@@ -7,7 +7,7 @@ class ComplianceItemInput(BaseModel):
     material_code: Optional[str] = Field(None, description="标准物料编码")
     material_name: Optional[str] = Field(None, description="物料名称")
     specification: Optional[str] = Field(None, description="规格型号")
-    quantity: float = Field(..., gt=0, description="采购/销售数量")
+    quantity: float = Field(0.0, ge=0, description="采购/销售数量")
     unit: Optional[str] = Field("吨", description="计量单位")
     unit_price: float = Field(..., ge=0, description="含税单价")
     total_amount: Optional[float] = Field(None, description="明细总金额")

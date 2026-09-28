@@ -2,10 +2,12 @@ import logging
 from datetime import datetime, timezone
 import uuid
 from typing import Optional, Dict, Any, List
+import httpx
 from pymongo import ReturnDocument
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 try:
+    from app.config import settings
     from app.schemas.orders import (
         DraftCreateRequest,
         DraftUpdateRequest,
@@ -13,11 +15,14 @@ try:
         OrderSubmitRequest,
         OrderSubmitResponseData,
         OrderItemDTO,
+        OrderApprovalRequest,
+        OrderApprovalResponseData,
     )
     from app.schemas.compliance import ComplianceVerifyRequest, ComplianceItemInput
     from app.services.compliance import compliance_engine
     from app.core.exceptions import BusinessException
 except ImportError:
+    from backend.app.config import settings
     from backend.app.schemas.orders import (
         DraftCreateRequest,
         DraftUpdateRequest,
@@ -25,6 +30,8 @@ except ImportError:
         OrderSubmitRequest,
         OrderSubmitResponseData,
         OrderItemDTO,
+        OrderApprovalRequest,
+        OrderApprovalResponseData,
     )
     from backend.app.schemas.compliance import ComplianceVerifyRequest, ComplianceItemInput
     from backend.app.services.compliance import compliance_engine
@@ -444,6 +451,46 @@ class OrderService:
                 {"$set": {"status": "SUBMITTED", "order_no": order_no, "updated_at": now}},
             )
 
+        # 9. 提单成功后通过 httpx 调用 Mock ERP 回写中台接口
+        try:
+            erp_payload = {
+                "order_no": order_no,
+                "source_draft_id": data.draft_id,
+                "order_type": data.order_type,
+                "contract_no": data.contract_no,
+                "counterparty_name": data.counterparty_name or "签约单位",
+                "project_name": data.project_name or "工程项目",
+                "delivery_address": data.delivery_address or "工地送货地址",
+                "contact_person": data.contact_person or "现场负责人",
+                "items": [
+                    {
+                        "item_seq": i.item_seq,
+                        "material_code": i.material_code,
+                        "material_name": i.material_name,
+                        "specification": i.specification or "",
+                        "quantity": i.quantity,
+                        "unit": i.unit,
+                        "unit_price": i.unit_price,
+                        "total_amount": i.total_amount or round(i.quantity * i.unit_price, 2),
+                    }
+                    for i in items_payload
+                ],
+                "total_amount": calculated_total,
+                "is_special_approved": is_over_quota or order_status == "PENDING_SPECIAL_APPROVAL",
+                "special_approval_reason": reason if (is_over_quota or order_status == "PENDING_SPECIAL_APPROVAL") else None,
+                "operator_name": data.operator_name or "李强",
+                "operator_dept": data.operator_dept or "物资贸易一部",
+            }
+            mock_url = f"{settings.MOCK_ERP_BASE_URL.rstrip('/')}/api/erp/orders/writeback"
+            async with httpx.AsyncClient(timeout=2.0) as client:
+                res = await client.post(mock_url, json=erp_payload)
+                if res.status_code == 200:
+                    logger.info(f"Mock ERP writeback succeeded for order {order_no}")
+                else:
+                    logger.warning(f"Mock ERP writeback returned {res.status_code}: {res.text}")
+        except Exception as e:
+            logger.warning(f"Mock ERP writeback failed (non-blocking): {e}")
+
         logger.info(f"Order created successfully: {order_no}, status: {order_status}")
         return OrderSubmitResponseData(
             order_no=order_no,
@@ -452,6 +499,129 @@ class OrderService:
             is_over_quota=is_over_quota,
             special_approval_reason=reason if is_over_quota else None,
             created_at=now,
+        )
+
+    async def approve_order(
+        self,
+        order_no: str,
+        req: OrderApprovalRequest,
+        db: AsyncIOMotorDatabase,
+        header_name: Optional[str] = None,
+        header_dept: Optional[str] = None,
+        header_role: Optional[str] = None,
+    ) -> OrderApprovalResponseData:
+        """EP-06: 订单审批流转裁决，更新 db.orders，并通过后调用 Mock ERP 回写与审批回调"""
+        order = await db.orders.find_one({"order_no": order_no})
+        if not order:
+            raise BusinessException(message=f"未找到订单 [{order_no}]", code=400)
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+        act = (req.action or req.decision or "APPROVE").upper()
+        if act in ["APPROVE", "PASS"]:
+            decision = "PASS"
+            target_status = "ACTIVE"
+        elif act in ["REJECT"]:
+            decision = "REJECT"
+            target_status = "REJECTED"
+        else:
+            decision = "RETURN"
+            target_status = "RETURNED"
+
+        import urllib.parse
+        approver_name = req.approver_name or (urllib.parse.unquote(header_name) if header_name else None) or "李思远"
+        approver_dept = req.approver_dept or (urllib.parse.unquote(header_dept) if header_dept else None) or "物资贸易一部"
+        default_comment = "审批通过放行" if decision == "PASS" else ("退回经办人修改" if decision == "RETURN" else "审批驳回作废")
+        comment = req.comment or default_comment
+
+        # 若此前状态为 PENDING_SPECIAL_APPROVAL，且本次审批通过，则原子扣减合同额度
+        if decision == "PASS" and order.get("order_status") != "ACTIVE":
+            contract_no = order["contract_no"]
+            total_amount = float(order.get("total_amount", 0.0))
+            await db.contracts.update_one(
+                {"contract_no": contract_no},
+                {
+                    "$inc": {
+                        "accumulated_amount": total_amount,
+                        "accumulated_order_count": 1,
+                        "accumulated_orders": 1,
+                        "remaining_amount": -total_amount,
+                        "remaining_order_count": -1,
+                        "remaining_orders": -1,
+                    },
+                    "$set": {"updated_at": now_iso},
+                },
+            )
+
+        # 更新本地 orders 集合
+        await db.orders.update_one(
+            {"order_no": order_no},
+            {
+                "$set": {
+                    "order_status": target_status,
+                    "approver_name": approver_name,
+                    "approver_dept": approver_dept,
+                    "approval_comment": comment,
+                    "approved_at": now_iso,
+                    "updated_at": now_iso,
+                }
+            },
+        )
+
+        # AC-02 & AC-03: 完整支持三态流转并回传 Mock ERP (保证单据存在并执行审批状态机回调)
+        # 1. 确保 Mock ERP 有该订单 (回写)
+        try:
+            writeback_payload = {
+                "order_no": order_no,
+                "source_draft_id": order.get("draft_id"),
+                "order_type": order.get("order_type", "SALES"),
+                "contract_no": order.get("contract_no"),
+                "counterparty_name": order.get("counterparty_name", ""),
+                "project_name": order.get("project_name", ""),
+                "delivery_address": order.get("delivery_address", ""),
+                "contact_person": order.get("contact_person", ""),
+                "items": order.get("items", []),
+                "total_amount": float(order.get("total_amount", 0.0)),
+                "is_special_approved": True,
+                "special_approval_reason": order.get("special_approval_reason"),
+                "operator_name": order.get("operator_name", "李强"),
+                "operator_dept": order.get("operator_dept", "物资贸易一部"),
+            }
+            async with httpx.AsyncClient(timeout=2.0) as client:
+                await client.post(
+                    f"{settings.MOCK_ERP_BASE_URL.rstrip('/')}/api/erp/orders/writeback",
+                    json=writeback_payload,
+                )
+        except Exception as e:
+            logger.warning(f"Mock ERP writeback during approval failed (non-blocking): {e}")
+
+        # 2. 调用 Mock ERP 审批回调
+        try:
+            cb_action = "APPROVE" if decision == "PASS" else ("RETURN" if decision == "RETURN" else "REJECT")
+            cb_payload = {
+                "order_no": order_no,
+                "action": cb_action,
+                "decision": decision,
+                "approver_name": approver_name,
+                "comment": comment,
+                "approver_dept": approver_dept,
+                "approval_time": now_iso,
+            }
+            async with httpx.AsyncClient(timeout=2.0) as client:
+                await client.post(
+                    f"{settings.MOCK_ERP_BASE_URL.rstrip('/')}/api/erp/orders/approval-callback",
+                    json=cb_payload,
+                )
+        except Exception as e:
+            logger.warning(f"Mock ERP approval callback failed (non-blocking): {e}")
+
+        logger.info(f"Order {order_no} approved with decision={decision}, status={target_status}")
+        return OrderApprovalResponseData(
+            order_no=order_no,
+            order_status=target_status,
+            decision=decision,
+            approver_name=approver_name,
+            approval_comment=comment,
+            approved_at=now_iso,
         )
 
 

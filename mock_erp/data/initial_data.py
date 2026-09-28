@@ -26,10 +26,11 @@ INITIAL_ORDERS = load_seeds("orders.json")
 
 
 async def init_seed_data(db: AsyncIOMotorDatabase) -> None:
-    """初始化并同步中台种子数据（合同、物料、初始订单）与关键索引"""
-    logger.info("Initializing mock ERP seed data and indexes from external data files...")
+    """初始化并同步中台种子数据（合同、物料、初始订单）、序列计数器与关键索引"""
+    logger.info("Initializing mock ERP seed data, counters and indexes...")
 
     # 1. 创建唯一索引
+    await db.erp_counters.create_index("name", unique=True)
     await db.erp_contracts.create_index("contract_no", unique=True)
     await db.erp_materials.create_index("material_code", unique=True)
     await db.erp_orders.create_index("order_no", unique=True)
@@ -63,4 +64,27 @@ async def init_seed_data(db: AsyncIOMotorDatabase) -> None:
             upsert=True,
         )
 
-    logger.info(f"Mock ERP seed data initialized successfully: {len(contracts)} contracts, {len(materials)} materials, {len(orders)} orders.")
+    # 5. 初始化自增序列计数器 erp_counters (用于原子订单号派发)
+    all_orders = await db.erp_orders.find({}, {"order_no": 1}).to_list(1000)
+    max_seq = 0
+    for o in all_orders:
+        ono = o.get("order_no", "")
+        parts = ono.split("-")
+        if len(parts) >= 4 and parts[-1].isdigit():
+            try:
+                max_seq = max(max_seq, int(parts[-1]))
+            except ValueError:
+                pass
+
+    counter = await db.erp_counters.find_one({"name": "order_seq"})
+    if not counter:
+        await db.erp_counters.insert_one({"name": "order_seq", "value": max_seq})
+        logger.info(f"Initialized erp_counters with order_seq: {max_seq}")
+    elif counter.get("value", 0) < max_seq:
+        await db.erp_counters.update_one({"name": "order_seq"}, {"$set": {"value": max_seq}})
+        logger.info(f"Synchronized erp_counters order_seq to: {max_seq}")
+
+    logger.info(
+        f"Mock ERP seed data initialized successfully: {len(contracts)} contracts, "
+        f"{len(materials)} materials, {len(orders)} orders."
+    )

@@ -44,6 +44,8 @@ export interface OrderDraft {
   business_name: string;
   procurement_mode: string;
   business_tag: string;
+  settlement_method?: string;
+  payment_term?: string;
   items: OrderItem[];
   total_amount: number;
   is_over_quota: boolean;
@@ -85,6 +87,7 @@ export interface ContractQuota {
  */
 export interface OrderRecord extends OrderDraft {
   order_no: string;
+  is_special_approved?: boolean;
   approver_name?: string;
   approval_comment?: string;
   created_at: string;

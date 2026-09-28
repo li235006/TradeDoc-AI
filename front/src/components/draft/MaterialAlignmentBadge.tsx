@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle2, HelpCircle, AlertCircle, Sparkles, Check, ChevronDown, Edit3 } from 'lucide-react';
+import { apiClient } from '../../services/api';
+import { ApiResponse } from '../../types';
 
 interface MaterialCandidate {
   code: string;
@@ -18,14 +20,6 @@ interface MaterialAlignmentBadgeProps {
   className?: string;
 }
 
-// 模拟标准候选主档供人工校准纠错
-const CANDIDATES: MaterialCandidate[] = [
-  { code: 'STL-RB-400E-20', name: '热轧带肋钢筋', spec: 'HRB400E Φ20mm', similarity: 0.96 },
-  { code: 'STL-PL-Q235-10', name: '普碳钢板', spec: 'Q235B 10*1500*6000', similarity: 0.88 },
-  { code: 'PIP-SM-20G-57', name: '无缝钢管', spec: '20G Φ57*3.5', similarity: 0.75 },
-  { code: 'CEM-PC-425', name: '普通硅酸盐水泥', spec: 'P.O 42.5 散装', similarity: 0.94 },
-];
-
 export const MaterialAlignmentBadge: React.FC<MaterialAlignmentBadgeProps> = ({
   status = 'ALIGNED',
   confidence = 0.95,
@@ -36,6 +30,26 @@ export const MaterialAlignmentBadge: React.FC<MaterialAlignmentBadgeProps> = ({
   className = '',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [candidates, setCandidates] = useState<MaterialCandidate[]>([]);
+
+  useEffect(() => {
+    // 从主数据加载真实物料候选
+    apiClient
+      .get<ApiResponse<any[]>>('/master/materials')
+      .then((res) => {
+        if (res.data?.data) {
+          setCandidates(
+            res.data.data.map((m) => ({
+              code: m.material_code,
+              name: m.material_name,
+              spec: m.specification || '',
+              similarity: 0.95,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const getStatusConfig = () => {
     switch (status) {
@@ -59,10 +73,10 @@ export const MaterialAlignmentBadge: React.FC<MaterialAlignmentBadgeProps> = ({
       default:
         return {
           bg: 'bg-[#FEE2E2]',
-          text: 'text-[#991B1B]',
-          border: 'border-[#FECDD3]',
+          text: 'text-[#DC2626]',
+          border: 'border-[#FECACA]',
           icon: AlertCircle,
-          label: '未自动对齐',
+          label: `未对齐 (${Math.round(confidence * 100)}%)`,
         };
     }
   };
@@ -70,9 +84,9 @@ export const MaterialAlignmentBadge: React.FC<MaterialAlignmentBadgeProps> = ({
   const config = getStatusConfig();
   const Icon = config.icon;
 
-  const handleSelectCandidate = (c: MaterialCandidate) => {
+  const handleSelectCandidate = (candidate: MaterialCandidate) => {
     if (onAlignChange) {
-      onAlignChange(c.code, c.name);
+      onAlignChange(candidate.code, candidate.name);
     }
     setIsOpen(false);
   };
@@ -125,32 +139,30 @@ export const MaterialAlignmentBadge: React.FC<MaterialAlignmentBadgeProps> = ({
             </div>
 
             {/* 手动对齐候选库 */}
-            <div className="pt-2 border-t border-[#F1F5F9] space-y-1.5">
-              <div className="text-[10px] text-[#64748B] flex items-center justify-between">
-                <span>或手动选用主档品名：</span>
-                <Edit3 className="w-3 h-3" />
+            {candidates.length > 0 && (
+              <div className="pt-2 border-t border-[#F1F5F9] space-y-1.5">
+                <div className="text-[10px] text-[#64748B] flex items-center justify-between">
+                  <span>或手动选用主档品名：</span>
+                  <Edit3 className="w-3 h-3" />
+                </div>
+                <div className="space-y-1 max-h-32 overflow-y-auto">
+                  {candidates.map((c) => (
+                    <button
+                      key={c.code}
+                      type="button"
+                      onClick={() => handleSelectCandidate(c)}
+                      className="w-full text-left p-1.5 rounded-hig-sm hover:bg-[#F8FAFC] border border-transparent hover:border-[#E2E8F0] flex items-center justify-between transition text-xs"
+                    >
+                      <div className="truncate pr-2">
+                        <div className="font-medium text-[#0F172A]">{c.name}</div>
+                        <div className="text-[10px] text-[#64748B] font-mono">{c.code}</div>
+                      </div>
+                      {standardCode === c.code && <Check className="w-3.5 h-3.5 text-[#16A34A] flex-shrink-0" />}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-1 max-h-32 overflow-y-auto">
-                {CANDIDATES.map((c) => (
-                  <button
-                    key={c.code}
-                    type="button"
-                    onClick={() => handleSelectCandidate(c)}
-                    className="w-full text-left p-1.5 rounded-hig-sm hover:bg-[#F8FAFC] border border-transparent hover:border-[#E2E8F0] flex items-center justify-between transition text-xs"
-                  >
-                    <div>
-                      <div className="font-medium text-[#0F172A] text-[11px]">{c.name}</div>
-                      <div className="text-[9px] font-mono text-[#64748B]">{c.code} · {c.spec}</div>
-                    </div>
-                    {c.code === standardCode ? (
-                      <Check className="w-3 h-3 text-[#16A34A]" />
-                    ) : (
-                      <span className="text-[9px] text-[#64748B]">{Math.round(c.similarity * 100)}%</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
         </>
       )}

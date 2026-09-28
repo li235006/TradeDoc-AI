@@ -1,3 +1,4 @@
+import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
 
@@ -114,6 +115,36 @@ async def test_update_draft_recalculation():
 
 
 @pytest.mark.asyncio
+async def test_submit_missing_idempotency_key_blocked():
+    """AC-09: 验证提交端点缺失 Idempotency-Key 请求头时强阻断并返回 400"""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        payload = {
+            "contract_no": "2026-WZ-090",
+            "items": [
+                {
+                    "item_seq": 1,
+                    "material_code": "PIP-SM-20G-57",
+                    "material_name": "无缝钢管",
+                    "specification": "20G Φ57*3.5",
+                    "quantity": 10.0,
+                    "unit": "米",
+                    "unit_price": 120.0,
+                    "match_status": "ALIGNED",
+                }
+            ],
+        }
+        # 不传 Idempotency-Key
+        res1 = await ac.post("/api/v1/orders/submit", json=payload)
+        assert res1.json()["code"] == 400
+        assert "Idempotency-Key" in res1.json()["message"]
+
+        res2 = await ac.post("/api/v1/orders/submit-special", json=payload)
+        assert res2.json()["code"] == 400
+        assert "Idempotency-Key" in res2.json()["message"]
+
+
+@pytest.mark.asyncio
 async def test_submit_order_over_quota_blocked_without_reason():
     """测试超额提单未填写特批理由或理由不足10字时，严格拦截并返回400"""
     transport = ASGITransport(app=app)
@@ -135,7 +166,8 @@ async def test_submit_order_over_quota_blocked_without_reason():
             ],
             "special_approval_reason": "",  # 未填
         }
-        res_submit = await ac.post("/api/v1/orders/submit", json=over_quota_payload)
+        headers = {"Idempotency-Key": "IDEM-TEST-OQ-01"}
+        res_submit = await ac.post("/api/v1/orders/submit", json=over_quota_payload, headers=headers)
         res_data = res_submit.json()
         assert res_data["code"] == 400
         assert "合同可用额度不足" in res_data["message"]
@@ -143,7 +175,8 @@ async def test_submit_order_over_quota_blocked_without_reason():
 
         # 特批理由小于10字拦截
         over_quota_payload["special_approval_reason"] = "额度不够用"  # 5字
-        res_short = await ac.post("/api/v1/orders/submit", json=over_quota_payload)
+        headers2 = {"Idempotency-Key": "IDEM-TEST-OQ-02"}
+        res_short = await ac.post("/api/v1/orders/submit", json=over_quota_payload, headers=headers2)
         assert res_short.json()["code"] == 400
 
 
@@ -168,8 +201,9 @@ async def test_submit_order_special_approval_success():
             ],
             "special_approval_reason": "科技城数字经济产业园二期抢工期急需追加高规格钢材储备",  # >10字
         }
+        headers = {"Idempotency-Key": f"IDEM-SPEC-{uuid.uuid4().hex[:8]}"}
         # 通过 submit-special 接口提交
-        res_special = await ac.post("/api/v1/orders/submit-special", json=special_payload)
+        res_special = await ac.post("/api/v1/orders/submit-special", json=special_payload, headers=headers)
         assert res_special.status_code == 200
         data_special = res_special.json()["data"]
         assert data_special["order_status"] == "PENDING_SPECIAL_APPROVAL"
@@ -228,7 +262,8 @@ async def test_submit_order_compliant_active_and_quota_deducted():
                 }
             ],
         }
-        res_submit = await ac.post("/api/v1/orders/submit", json=submit_payload)
+        headers = {"Idempotency-Key": f"IDEM-ACT-{uuid.uuid4().hex[:8]}"}
+        res_submit = await ac.post("/api/v1/orders/submit", json=submit_payload, headers=headers)
         assert res_submit.status_code == 200
         data_submit = res_submit.json()["data"]
         assert data_submit["order_status"] == "ACTIVE"
@@ -266,7 +301,8 @@ async def test_order_idempotency_control():
                 }
             ],
         }
-        headers = {"Idempotency-Key": "IDEM-TEST-SEQ-001"}
+        test_key = f"IDEM-SEQ-{uuid.uuid4().hex[:8]}"
+        headers = {"Idempotency-Key": test_key}
         res1 = await ac.post("/api/v1/orders/submit", json=payload, headers=headers)
         order_no1 = res1.json()["data"]["order_no"]
 
@@ -274,6 +310,144 @@ async def test_order_idempotency_control():
         order_no2 = res2.json()["data"]["order_no"]
 
         assert order_no1 == order_no2
+
+
+@pytest.mark.asyncio
+async def test_approve_order_endpoint_and_quota_flow():
+    """AC-01 ~ AC-04: 测试 EP-06 /orders/{order_no}/approve 完整三态流转 (PASS/RETURN/REJECT) 与额度原子扣减断言"""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        import urllib.parse
+        approve_headers = {
+            "X-User-Name": urllib.parse.quote("王风控总监"),
+            "X-User-Dept": urllib.parse.quote("商贸风控审批部"),
+            "X-User-Role": "APPROVER",
+        }
+        special_payload = {
+            "contract_no": "2026-WZ-089",
+            "items": [
+                {
+                    "item_seq": 1,
+                    "material_code": "STL-RB-400E-20",
+                    "material_name": "热轧带肋钢筋",
+                    "specification": "HRB400E Φ20mm",
+                    "quantity": 50.0,
+                    "unit": "吨",
+                    "unit_price": 4000.0,
+                    "match_status": "ALIGNED",
+                }
+            ],
+            "special_approval_reason": "现场工期提前追加采购50吨高标号钢筋",
+        }
+
+        # -----------------------------
+        # 1. 态一：APPROVE / PASS 审批放行 -> 状态转 ACTIVE，原子扣减合同额度
+        # -----------------------------
+        headers1 = {"Idempotency-Key": f"IDEM-APP-PASS-{uuid.uuid4().hex[:8]}"}
+        res_sub1 = await ac.post("/api/v1/orders/submit-special", json=special_payload, headers=headers1)
+        order_no1 = res_sub1.json()["data"]["order_no"]
+
+        contract_before_pass = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        accum_before_pass = contract_before_pass["accumulated_amount"]
+        rem_before_pass = contract_before_pass["remaining_amount"]
+
+        approve_body_pass = {
+            "decision": "PASS",
+            "comment": "现场情况属实，商务部报备完成，同意特批放行",
+        }
+        res_pass = await ac.post(f"/api/v1/orders/{order_no1}/approve", json=approve_body_pass, headers=approve_headers)
+        assert res_pass.status_code == 200
+        data_pass = res_pass.json()["data"]
+        assert data_pass["order_status"] == "ACTIVE"
+        assert data_pass["decision"] == "PASS"
+        assert data_pass["approver_name"] == "王风控总监"
+        assert "2026" in data_pass["approved_at"]
+
+        # 断言 PASS 后合同配额扣减
+        contract_after_pass = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        assert contract_after_pass["accumulated_amount"] == accum_before_pass + 200000.0
+        assert contract_after_pass["remaining_amount"] == rem_before_pass - 200000.0
+
+        # 断言 MongoDB orders 集合状态更新为 ACTIVE
+        order_doc1 = await db_manager.mongo_db.orders.find_one({"order_no": order_no1})
+        assert order_doc1["order_status"] == "ACTIVE"
+        assert order_doc1["approver_name"] == "王风控总监"
+
+        # -----------------------------
+        # 2. 态二：RETURN 退回修改 -> 状态转 RETURNED，合同额度不占用
+        # -----------------------------
+        headers2 = {"Idempotency-Key": f"IDEM-APP-RET-{uuid.uuid4().hex[:8]}"}
+        res_sub2 = await ac.post("/api/v1/orders/submit-special", json=special_payload, headers=headers2)
+        order_no2 = res_sub2.json()["data"]["order_no"]
+
+        contract_before_ret = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        accum_before_ret = contract_before_ret["accumulated_amount"]
+
+        return_body = {
+            "decision": "RETURN",
+            "comment": "请经办人补充现场监理签收确认单后再报",
+        }
+        res_ret = await ac.post(f"/api/v1/orders/{order_no2}/approve", json=return_body, headers=approve_headers)
+        assert res_ret.status_code == 200
+        data_ret = res_ret.json()["data"]
+        assert data_ret["order_status"] == "RETURNED"
+        assert data_ret["decision"] == "RETURN"
+        assert data_ret["approval_comment"] == "请经办人补充现场监理签收确认单后再报"
+
+        # 断言 RETURN 后合同配额绝不扣减
+        contract_after_ret = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        assert contract_after_ret["accumulated_amount"] == accum_before_ret
+
+        # 断言 MongoDB orders 集合状态更新为 RETURNED
+        order_doc2 = await db_manager.mongo_db.orders.find_one({"order_no": order_no2})
+        assert order_doc2["order_status"] == "RETURNED"
+
+        # -----------------------------
+        # 3. 态三：REJECT 驳回作废 -> 状态转 REJECTED，合同额度不占用
+        # -----------------------------
+        headers3 = {"Idempotency-Key": f"IDEM-APP-REJ-{uuid.uuid4().hex[:8]}"}
+        res_sub3 = await ac.post("/api/v1/orders/submit-special", json=special_payload, headers=headers3)
+        order_no3 = res_sub3.json()["data"]["order_no"]
+
+        contract_before_rej = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        accum_before_rej = contract_before_rej["accumulated_amount"]
+
+        reject_body = {
+            "action": "REJECT",
+            "comment": "工程预算超标且严重违规，审批驳回作废",
+        }
+        res_rej = await ac.post(f"/api/v1/orders/{order_no3}/approve", json=reject_body, headers=approve_headers)
+        assert res_rej.status_code == 200
+        data_rej = res_rej.json()["data"]
+        assert data_rej["order_status"] == "REJECTED"
+        assert data_rej["decision"] == "REJECT"
+
+        # 断言 REJECT 后合同配额绝不扣减
+        contract_after_rej = await db_manager.mongo_db.contracts.find_one({"contract_no": "2026-WZ-089"})
+        assert contract_after_rej["accumulated_amount"] == accum_before_rej
+
+        # 断言 MongoDB orders 集合状态更新为 REJECTED
+        order_doc3 = await db_manager.mongo_db.orders.find_one({"order_no": order_no3})
+        assert order_doc3["order_status"] == "REJECTED"
+
+
+@pytest.mark.asyncio
+async def test_get_contract_quota_endpoint():
+    """AC-03: 测试 EP-08 GET /api/v1/contracts/{contract_no}/quota 端点"""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        res = await ac.get("/api/v1/contracts/2026-WZ-089/quota")
+        assert res.status_code == 200
+        data = res.json()["data"]
+        assert data["contract_no"] == "2026-WZ-089"
+        assert data["contract_total_amount"] == 5000000.0
+        assert "remaining_quota_amount" in data
+        assert "remaining_amount" in data
+        assert "is_over_quota" in data
+
+        # 测试不存在合同返回 400
+        res_err = await ac.get("/api/v1/contracts/NON-EXISTENT-CONTRACT/quota")
+        assert res_err.json()["code"] == 400
 
 
 @pytest.mark.asyncio

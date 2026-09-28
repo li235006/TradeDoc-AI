@@ -80,3 +80,27 @@ class ParseResultData(BaseModel):
     compliance: ComplianceVerifyResult = Field(..., description="对接风控引擎实时诊断报文")
     clarification: Optional[str] = Field(None, description="面向经办人的中文业务提示/澄清话术")
     ocr_raw_text: Optional[str] = Field(None, description="单据 OCR 识别原始文本 (若有)")
+
+
+class ExcelRowResult(BaseModel):
+    row_index: int = Field(..., description="Excel 行号 (从 1 开始)")
+    status: Literal["VALID", "ERROR"] = Field(..., description="校验状态: VALID / ERROR")
+    error_msg: Optional[str] = Field(None, description="校验失败原因说明 (如无异常则为 null)")
+    contract_no: Optional[str] = Field(None, description="关联合同编号")
+    counterparty_name: Optional[str] = Field(None, description="签约往来单位")
+    project_name: Optional[str] = Field(None, description="工程项目名称")
+    material_code: Optional[str] = Field(None, description="标准物料编码")
+    material_name: Optional[str] = Field(None, description="规范物资名称")
+    specification: Optional[str] = Field("", description="规格型号")
+    quantity: float = Field(0.0, description="采购数量")
+    unit: str = Field("吨", description="计量单位")
+    unit_price: float = Field(0.0, description="含税单价")
+    total_amount: float = Field(0.0, description="明细总金额")
+    delivery_address: Optional[str] = Field(None, description="工地送货地址")
+
+
+class ExcelParseResultData(BaseModel):
+    total_rows: int = Field(..., description="Excel 导入数据总行数")
+    valid_rows: int = Field(..., description="合规校验通过有效行数")
+    error_rows: int = Field(..., description="存在异常/阻断行数")
+    rows: List[ExcelRowResult] = Field(default_factory=list, description="逐行校验明细清单")

@@ -204,3 +204,38 @@ async def test_case_contract_expired_blocked():
 
     rule_codes = [r["rule_code"] for r in data["rule_items"]]
     assert "RULE_CONTRACT_EXPIRED" in rule_codes
+
+
+@pytest.mark.asyncio
+async def test_case_low_price_deviation_warning():
+    """AC-04: 低价偏离 (-20%) 双向偏离触发 WARNING 预警"""
+    payload = {
+        "contract_no": "2026-WZ-090",
+        "items": [
+            {
+                "item_seq": 1,
+                "material_code": "STL-RB-400E-20",
+                "material_name": "热轧带肋钢筋",
+                "specification": "HRB400E Φ20mm",
+                "quantity": 10.0,
+                "unit": "吨",
+                "unit_price": 3200.00,  # -20% 偏离指导价 4000
+                "total_amount": 32000.00,
+                "match_status": "ALIGNED",
+            }
+        ],
+        "total_amount": 32000.00,
+    }
+
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.post("/api/v1/compliance/verify", json=payload)
+
+    assert response.status_code == 200
+    res = response.json()
+    data = res["data"]
+    assert data["level"] == "WARNING"
+    assert data["is_compliant"] is False
+    assert abs(data["deviation_rate"]) == 20.0
+    rule_codes = [r["rule_code"] for r in data["rule_items"]]
+    assert "RULE_PRICE_DEVIATION" in rule_codes

@@ -18,7 +18,9 @@ try:
     from app.routers.compliance import router as compliance_router
     from app.routers.parse import router as parse_router
     from app.routers.orders import router as orders_router
+    from app.routers.contracts import router as contracts_router
     from app.services.semantic import semantic_service
+    from app.middleware.auth import AuthHeaderMiddleware
 except ImportError:
     from backend.app.config import settings
     from backend.app.core.exceptions import BusinessException
@@ -28,7 +30,9 @@ except ImportError:
     from backend.app.routers.compliance import router as compliance_router
     from backend.app.routers.parse import router as parse_router
     from backend.app.routers.orders import router as orders_router
+    from backend.app.routers.contracts import router as contracts_router
     from backend.app.services.semantic import semantic_service
+    from backend.app.middleware.auth import AuthHeaderMiddleware
 
 # 配置全局日志
 logging.basicConfig(
@@ -61,6 +65,16 @@ async def lifespan(app: FastAPI):
         await db_manager.connect_mongo()
         if db_manager.mongo_db is not None:
             await seed_master_data(db_manager.mongo_db)
+            # AC-08: 在 lifespan 启动阶段建立必要索引
+            try:
+                await db_manager.mongo_db.orders.create_index("order_no", unique=True)
+                await db_manager.mongo_db.orders.create_index([("contract_no", 1), ("order_status", 1)])
+                await db_manager.mongo_db.drafts.create_index("draft_id", unique=True)
+                await db_manager.mongo_db.drafts.create_index("operator_name")
+                await db_manager.mongo_db.counters.create_index("name", unique=True, sparse=True)
+                logger.info("Successfully established core collection indexes on MongoDB.")
+            except Exception as ie:
+                logger.warning(f"Index creation warning: {ie}")
     except Exception as e:
         logger.error(f"Failed to connect MongoDB or seed master data at {settings.MONGO_URI}: {e}")
 
@@ -87,7 +101,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# 配置 CORS 跨域中间件
+# 配置 CORS 跨域中间件与请求头鉴权中间件
 origins = settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else [settings.CORS_ORIGINS]
 app.add_middleware(
     CORSMiddleware,
@@ -96,6 +110,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(AuthHeaderMiddleware)
 
 
 # 全局异常捕获处理 (统一三值协议: code 200/400/500, HTTP 状态码统一为 200)
@@ -137,6 +152,8 @@ app.include_router(parse_router, prefix="/api/v1/parse", tags=["Parse"])
 app.include_router(parse_router, prefix="/api/parse", tags=["Parse"])
 app.include_router(orders_router, prefix="/api/v1/orders", tags=["Orders"])
 app.include_router(orders_router, prefix="/api/orders", tags=["Orders"])
+app.include_router(contracts_router, prefix="/api/v1/contracts", tags=["Contracts"])
+app.include_router(contracts_router, prefix="/api/contracts", tags=["Contracts"])
 
 
 @app.get("/health", summary="系统健康探针")

@@ -7,10 +7,13 @@ import {
   Sparkles,
   CheckCircle2,
   RefreshCw,
-  X
+  X,
+  AlertTriangle,
+  FileText
 } from 'lucide-react';
 import { tradeApi } from '../../services/api';
 import { useTradeStore } from '../../stores/useTradeStore';
+import { OrderDraft } from '../../types';
 
 interface BoundingBox {
   id: string;
@@ -24,82 +27,124 @@ interface BoundingBox {
   height: number;
 }
 
-const DEFAULT_SAMPLE_BOXES: BoundingBox[] = [
-  {
-    id: 'box-contract',
-    label: '关联合同',
-    value: '2026-WZ-089',
-    color: 'bg-[#0071E3]/15',
-    borderColor: 'border-[#0071E3]',
-    top: 18,
-    left: 45,
-    width: 32,
-    height: 6,
-  },
-  {
-    id: 'box-material',
-    label: '物资品名',
-    value: '普通硅酸盐水泥 P.O 42.5',
-    color: 'bg-[#8B5CF6]/15',
-    borderColor: 'border-[#8B5CF6]',
-    top: 42,
-    left: 20,
-    width: 48,
-    height: 7,
-  },
-  {
-    id: 'box-qty',
-    label: '提单数量',
-    value: '500.000 吨',
-    color: 'bg-[#16A34A]/15',
-    borderColor: 'border-[#16A34A]',
-    top: 53,
-    left: 25,
-    width: 24,
-    height: 6,
-  },
-  {
-    id: 'box-price',
-    label: '含税单价',
-    value: '¥ 440.00',
-    color: 'bg-[#CA8A04]/15',
-    borderColor: 'border-[#CA8A04]',
-    top: 53,
-    left: 56,
-    width: 22,
-    height: 6,
-  },
-  {
-    id: 'box-address',
-    label: '送货地点',
-    value: '苏州市高新区科技城 1 号工地物资中转站',
-    color: 'bg-[#0EA5E9]/15',
-    borderColor: 'border-[#0EA5E9]',
-    top: 72,
-    left: 20,
-    width: 65,
-    height: 7,
-  },
-];
+/**
+ * 根据 OCR 真实解析返回的 OrderDraft 契约动态生成要素标框，彻底废除假数据
+ */
+function createDynamicBoxesFromDraft(draft: OrderDraft): BoundingBox[] {
+  const dynamicBoxes: BoundingBox[] = [];
+  let topCursor = 16;
+
+  if (draft.contract_no) {
+    dynamicBoxes.push({
+      id: 'box-contract',
+      label: '关联合同',
+      value: draft.contract_no,
+      color: 'bg-[#0071E3]/15',
+      borderColor: 'border-[#0071E3]',
+      top: topCursor,
+      left: 35,
+      width: 45,
+      height: 7,
+    });
+    topCursor += 12;
+  }
+
+  if (draft.counterparty_name) {
+    dynamicBoxes.push({
+      id: 'box-counterparty',
+      label: '往来单位',
+      value: draft.counterparty_name,
+      color: 'bg-[#6366F1]/15',
+      borderColor: 'border-[#6366F1]',
+      top: topCursor,
+      left: 20,
+      width: 60,
+      height: 7,
+    });
+    topCursor += 12;
+  }
+
+  if (draft.items && draft.items.length > 0) {
+    const firstItem = draft.items[0];
+    if (firstItem.material_name) {
+      dynamicBoxes.push({
+        id: 'box-material',
+        label: '物资品名',
+        value: `${firstItem.material_name} ${firstItem.specification || ''}`.trim(),
+        color: 'bg-[#8B5CF6]/15',
+        borderColor: 'border-[#8B5CF6]',
+        top: topCursor,
+        left: 20,
+        width: 55,
+        height: 8,
+      });
+      topCursor += 12;
+    }
+
+    if (firstItem.quantity) {
+      dynamicBoxes.push({
+        id: 'box-qty',
+        label: '提单数量',
+        value: `${firstItem.quantity} ${firstItem.unit || '吨'}`,
+        color: 'bg-[#16A34A]/15',
+        borderColor: 'border-[#16A34A]',
+        top: topCursor,
+        left: 20,
+        width: 28,
+        height: 7,
+      });
+    }
+
+    if (firstItem.unit_price) {
+      dynamicBoxes.push({
+        id: 'box-price',
+        label: '含税单价',
+        value: `¥ ${Number(firstItem.unit_price).toLocaleString()}`,
+        color: 'bg-[#CA8A04]/15',
+        borderColor: 'border-[#CA8A04]',
+        top: topCursor,
+        left: 52,
+        width: 28,
+        height: 7,
+      });
+      topCursor += 12;
+    }
+  }
+
+  if (draft.delivery_address) {
+    dynamicBoxes.push({
+      id: 'box-address',
+      label: '送货地点',
+      value: draft.delivery_address,
+      color: 'bg-[#0EA5E9]/15',
+      borderColor: 'border-[#0EA5E9]',
+      top: Math.min(topCursor, 80),
+      left: 20,
+      width: 65,
+      height: 8,
+    });
+  }
+
+  return dynamicBoxes;
+}
 
 export const DocumentViewer: React.FC = () => {
   const { setDraft, setQuota } = useTradeStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [fileMeta, setFileMeta] = useState<{ name: string; size: string; isImage: boolean } | null>(null);
   const [zoomLevel, setZoomLevel] = useState<number>(100);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [activeBoxId, setActiveBoxId] = useState<string | null>(null);
-  const [boxes, setBoxes] = useState<BoundingBox[]>(DEFAULT_SAMPLE_BOXES);
+  const [boxes, setBoxes] = useState<BoundingBox[]>([]);
   const [showBoxes, setShowBoxes] = useState<boolean>(true);
+  const [ocrError, setOcrError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-      setZoomLevel(100);
-      triggerOcr(file);
+      handleFileSelected(file);
     }
   };
 
@@ -107,27 +152,46 @@ export const DocumentViewer: React.FC = () => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-      setZoomLevel(100);
-      triggerOcr(file);
+      handleFileSelected(file);
     }
+  };
+
+  const handleFileSelected = (file: File) => {
+    const isImg = file.type.startsWith('image/');
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    setFileMeta({
+      name: file.name,
+      size: `${(file.size / 1024).toFixed(1)} KB`,
+      isImage: isImg,
+    });
+    setZoomLevel(100);
+    setBoxes([]);
+    setOcrError(null);
+    triggerOcr(file);
   };
 
   const triggerOcr = async (file: File) => {
     try {
       setIsProcessing(true);
+      setOcrError(null);
       const res = await tradeApi.parseOcr(file);
+
       if (res.data?.draft) {
         setDraft(res.data.draft);
+        const dynamicBoxes = createDynamicBoxesFromDraft(res.data.draft);
+        setBoxes(dynamicBoxes);
+      } else {
+        setBoxes([]);
       }
+
       if (res.data?.quota) {
         setQuota(res.data.quota);
       }
-      setBoxes(DEFAULT_SAMPLE_BOXES);
-    } catch {
-      // 联调阶段容错：若未连通后端，仍保留单据要素高亮
-      setBoxes(DEFAULT_SAMPLE_BOXES);
+    } catch (err: any) {
+      // 100% Zero-Fake：接口失败直接真实提示报错，严禁 fallback 假选框假数据
+      setBoxes([]);
+      setOcrError(err?.message || '单据 OCR 识别服务异常，请重试或检查图片清晰度');
     } finally {
       setIsProcessing(false);
     }
@@ -142,8 +206,17 @@ export const DocumentViewer: React.FC = () => {
   };
 
   const handleClear = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setPreviewUrl(null);
+    setFileMeta(null);
     setActiveBoxId(null);
+    setBoxes([]);
+    setOcrError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
@@ -176,7 +249,7 @@ export const DocumentViewer: React.FC = () => {
           )}
         </div>
 
-        {/* 缩放与选框控制器 */}
+        {/* 缩放与选框指示开关 */}
         {previewUrl && (
           <div className="flex items-center gap-1.5 bg-white p-1 rounded-hig border border-[#E2E8F0] text-xs">
             <button
@@ -202,25 +275,40 @@ export const DocumentViewer: React.FC = () => {
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
-            <button
-              onClick={() => setShowBoxes(!showBoxes)}
-              className={`px-2 py-0.5 rounded text-[10px] font-medium transition ${
-                showBoxes ? 'bg-[#EFF6FF] text-[#0071E3]' : 'text-[#64748B]'
-              }`}
-            >
-              选框指示
-            </button>
+            {boxes.length > 0 && (
+              <button
+                onClick={() => setShowBoxes(!showBoxes)}
+                className={`px-2 py-0.5 rounded text-[10px] font-medium transition ${
+                  showBoxes ? 'bg-[#EFF6FF] text-[#0071E3]' : 'text-[#64748B]'
+                }`}
+              >
+                选框指示 ({boxes.length})
+              </button>
+            )}
           </div>
         )}
       </div>
 
+      {/* 识别失败警示条 */}
+      {ocrError && (
+        <div className="px-4 py-2.5 bg-rose-50 border-b border-rose-200 text-xs text-rose-700 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+            <span>{ocrError}</span>
+          </div>
+          <button onClick={() => setOcrError(null)} className="text-rose-500 hover:text-rose-800">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
       {/* 主画布与预览区 */}
       <div className="flex-1 overflow-auto bg-[#F1F5F9] p-4 flex items-center justify-center relative">
         {isProcessing && (
-          <div className="absolute inset-0 bg-white/75 backdrop-blur-xs flex flex-col items-center justify-center z-30">
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col items-center justify-center z-30">
             <RefreshCw className="w-8 h-8 text-[#0071E3] animate-spin mb-2" />
             <span className="text-xs font-semibold text-[#0F172A]">正在智能解析单据票面要素...</span>
-            <span className="text-[11px] text-[#64748B] mt-0.5">自动比对合同编号与规范品名库</span>
+            <span className="text-[11px] text-[#64748B] mt-0.5">调用真实 OCR 服务比对合同编号与规范品名库</span>
           </div>
         )}
 
@@ -248,96 +336,79 @@ export const DocumentViewer: React.FC = () => {
             style={{
               transform: `scale(${zoomLevel / 100})`,
               minWidth: '380px',
-              maxWidth: '520px',
+              maxWidth: '560px',
             }}
           >
-            {/* 真实单据图片或示意单据卡片 */}
-            <div className="p-6 bg-white space-y-4 text-xs">
-              <div className="text-center pb-3 border-b border-black/[0.08]">
-                <div className="text-sm font-bold text-[#0F172A] tracking-wider">大宗商贸物资送货签收联</div>
-                <div className="text-[10px] text-[#64748B] mt-0.5">单据流水号：SH-WZ-20260928-883</div>
+            {/* 真实单据渲染：如果是图片则直接显示图片，若是文档则呈现文件元信息 */}
+            {fileMeta?.isImage ? (
+              <div className="relative">
+                <img
+                  src={previewUrl}
+                  alt={fileMeta.name}
+                  className="w-full h-auto max-h-[520px] object-contain block"
+                />
+
+                {/* 票面要素动态高亮选框覆盖层 */}
+                {showBoxes &&
+                  boxes.map((box) => (
+                    <div
+                      key={box.id}
+                      onClick={() => setActiveBoxId(box.id)}
+                      style={{
+                        top: `${box.top}%`,
+                        left: `${box.left}%`,
+                        width: `${box.width}%`,
+                        height: `${box.height}%`,
+                      }}
+                      className={`absolute border-2 rounded-xs cursor-pointer transition-all duration-150 ${box.borderColor} ${box.color} ${
+                        activeBoxId === box.id ? 'ring-2 ring-[#0071E3] scale-105 z-20' : 'hover:opacity-90'
+                      }`}
+                    >
+                      <span
+                        className={`absolute -top-4 left-0 px-1 py-0.2 rounded text-[9px] font-bold text-white shadow-xs ${
+                          box.id === 'box-contract'
+                            ? 'bg-[#0071E3]'
+                            : box.id === 'box-material'
+                            ? 'bg-[#8B5CF6]'
+                            : box.id === 'box-qty'
+                            ? 'bg-[#16A34A]'
+                            : box.id === 'box-price'
+                            ? 'bg-[#CA8A04]'
+                            : 'bg-[#0EA5E9]'
+                        }`}
+                      >
+                        {box.label}
+                      </span>
+                    </div>
+                  ))}
               </div>
-
-              <div className="grid grid-cols-2 gap-3 text-[11px] text-[#475569]">
-                <div>收货单位：中建八局科技城项目部</div>
-                <div>发货日期：2026-09-28</div>
-                <div>签约合同：2026-WZ-089</div>
-                <div>运输方式：直发汽车运输</div>
-              </div>
-
-              <table className="w-full border-collapse border border-[#CBD5E1] text-[11px] text-center mt-3">
-                <thead className="bg-[#F8FAFC]">
-                  <tr>
-                    <th className="border border-[#CBD5E1] p-1.5">物资品名与规格</th>
-                    <th className="border border-[#CBD5E1] p-1.5">数量</th>
-                    <th className="border border-[#CBD5E1] p-1.5">单价</th>
-                    <th className="border border-[#CBD5E1] p-1.5">含税金额</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border border-[#CBD5E1] p-1.5">普通硅酸盐水泥 P.O 42.5</td>
-                    <td className="border border-[#CBD5E1] p-1.5">500.000 吨</td>
-                    <td className="border border-[#CBD5E1] p-1.5">¥440.00</td>
-                    <td className="border border-[#CBD5E1] p-1.5 font-bold">¥220,000.00</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div className="text-[11px] text-[#475569] space-y-1 pt-2">
-                <div>收货地点：苏州市高新区科技城 1 号工地物资中转站</div>
-                <div>现场签收人：张明 (现场技术主管) 13912345678</div>
-              </div>
-            </div>
-
-            {/* 票面要素定位高亮选框覆盖层 */}
-            {showBoxes &&
-              boxes.map((box) => (
-                <div
-                  key={box.id}
-                  onClick={() => setActiveBoxId(box.id)}
-                  style={{
-                    top: `${box.top}%`,
-                    left: `${box.left}%`,
-                    width: `${box.width}%`,
-                    height: `${box.height}%`,
-                  }}
-                  className={`absolute border-2 rounded-xs cursor-pointer transition-all duration-150 ${box.borderColor} ${box.color} ${
-                    activeBoxId === box.id ? 'ring-2 ring-[#0071E3] scale-105 z-20' : 'hover:opacity-90'
-                  }`}
-                >
-                  <span
-                    className={`absolute -top-4 left-0 px-1 py-0.2 rounded text-[9px] font-bold text-white shadow-xs ${
-                      box.id === 'box-contract'
-                        ? 'bg-[#0071E3]'
-                        : box.id === 'box-material'
-                        ? 'bg-[#8B5CF6]'
-                        : box.id === 'box-qty'
-                        ? 'bg-[#16A34A]'
-                        : box.id === 'box-price'
-                        ? 'bg-[#CA8A04]'
-                        : 'bg-[#0EA5E9]'
-                    }`}
-                  >
-                    {box.label}
-                  </span>
+            ) : (
+              <div className="p-8 flex flex-col items-center justify-center text-center">
+                <div className="w-14 h-14 rounded-xl bg-blue-50 text-[#0071E3] flex items-center justify-center mb-3">
+                  <FileText className="w-8 h-8" />
                 </div>
-              ))}
+                <div className="text-sm font-bold text-[#0F172A]">{fileMeta?.name}</div>
+                <div className="text-xs text-[#64748B] mt-1">{fileMeta?.size}</div>
+                <div className="mt-4 text-[11px] text-emerald-600 font-medium">
+                  {boxes.length > 0 ? `已成功识别 ${boxes.length} 项关键商贸要素` : '等待识别结果'}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
 
       {/* 底部票面要素高亮对照清单 */}
-      {previewUrl && (
+      {previewUrl && boxes.length > 0 && (
         <div className="p-3 border-t border-[#E5E5EA] bg-white space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-[#0F172A] flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5 text-[#0071E3]" />
-              <span>提取到的单据商贸要素 ({boxes.length} 项)</span>
+              <span>提取到的真实商贸要素 ({boxes.length} 项)</span>
             </span>
             <span className="text-[11px] text-[#16A34A] font-semibold flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>已自动注入提单草稿</span>
+              <span>已同步注入提单草稿</span>
             </span>
           </div>
 

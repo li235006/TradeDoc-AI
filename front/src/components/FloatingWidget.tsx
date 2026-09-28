@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sparkles,
@@ -24,10 +24,19 @@ export const FloatingWidget: React.FC = () => {
     addMessage,
     setDraft,
     setQuota,
-    resetDraft
+    resetDraft,
+    displayMode,
+    setDisplayMode,
   } = useTradeStore();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  // 当从工作台点击“缩小为悬浮窗”时，自动展开浮窗
+  useEffect(() => {
+    if (displayMode === 'floating') {
+      setIsOpen(true);
+    }
+  }, [displayMode]);
   const [activeChannel, setActiveChannel] = useState<'text' | 'ocr' | 'batch'>('text');
   const [inputText, setInputText] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -61,7 +70,7 @@ export const FloatingWidget: React.FC = () => {
 
     try {
       // 请求后端自然语言解析
-      const res = await apiClient.post<any>('/parse/chat', { prompt: trimmed });
+      const res = await apiClient.post<any>('/parse/chat', { text: trimmed });
       if (res.data?.data) {
         const parsed = res.data.data;
         if (parsed.draft) {
@@ -75,52 +84,11 @@ export const FloatingWidget: React.FC = () => {
           content: parsed.reply || '已根据您的描述成功提取提单要素并同步至订单草稿。',
         });
       }
-    } catch {
-      // 智能本地兜底解析
-      if (trimmed.includes('中建八局') || trimmed.includes('科技城')) {
-        setDraft({
-          order_type: 'SALES',
-          contract_no: '2026-WZ-089',
-          counterparty_name: '中建八局第一建设有限公司',
-          project_name: '科技城数字经济产业园一期项目',
-          delivery_address: '苏州市高新区科技城 1 号工地物资中转站',
-          contact_person: '张建国 (13812345678)',
-          items: [
-            {
-              item_seq: 1,
-              material_code: '01.01.0024',
-              material_name: '热轧带肋钢筋',
-              specification: 'HRB400E Φ20mm',
-              quantity: 200,
-              unit: '吨',
-              unit_price: 4000,
-              total_amount: 800000,
-              match_status: 'ALIGNED',
-            },
-          ],
-          total_amount: 800000,
-        });
-        setQuota({
-          contract_no: '2026-WZ-089',
-          contract_total_amount: 5000000.0,
-          accumulated_order_amount: 4850000.0,
-          accumulated_order_count: 18,
-          remaining_quota_amount: 150000.0,
-          remaining_order_count: 2,
-          is_over_quota: true,
-          over_amount: 650000.0,
-        });
-        addMessage({
-          role: 'assistant',
-          content:
-            '已识别：关联合同 2026-WZ-089，物料【HRB400E Φ20mm】200 吨，单价 ¥4,000，单据总额 ¥800,000。当前剩余额度 ¥150,000，触发超额预警（超额 ¥650,000），请补充特批申报理由。',
-        });
-      } else {
-        addMessage({
-          role: 'assistant',
-          content: '已受理您的提单意向，已同步至订单草稿，建议点击右上角【全屏】在主工作台中查看详情。',
-        });
-      }
+    } catch (error: any) {
+      addMessage({
+        role: 'assistant',
+        content: '解析失败: ' + (error?.message || '网络连接或服务异常，请稍后重试'),
+      });
     } finally {
       setIsProcessing(false);
     }
@@ -131,8 +99,8 @@ export const FloatingWidget: React.FC = () => {
     try {
       const res = await orderApi.saveDraft(draft);
       setFeedback({ type: 'success', message: res.message || '草稿已暂存' });
-    } catch {
-      setFeedback({ type: 'error', message: '暂存失败' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '暂存失败，请检查网络或后端状态' });
     } finally {
       setTimeout(() => setFeedback(null), 3000);
     }
@@ -164,8 +132,8 @@ export const FloatingWidget: React.FC = () => {
       });
       setFeedback({ type: 'success', message: `特批已提交！单号：${res.data.order_no}` });
       setDraft({ order_status: 'PENDING_SPECIAL_APPROVAL', order_no: res.data.order_no });
-    } catch {
-      setFeedback({ type: 'error', message: '特批提交失败' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '特批提交失败，请检查网络或后端状态' });
     } finally {
       setIsProcessing(false);
       setTimeout(() => setFeedback(null), 4000);
@@ -201,8 +169,8 @@ export const FloatingWidget: React.FC = () => {
       });
       setFeedback({ type: 'success', message: `提单成功！单号：${res.data.order_no}` });
       setDraft({ order_status: 'ACTIVE', order_no: res.data.order_no });
-    } catch {
-      setFeedback({ type: 'error', message: '提交失败' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '提交失败，请检查网络或后端状态' });
     } finally {
       setIsProcessing(false);
       setTimeout(() => setFeedback(null), 4000);
@@ -233,6 +201,7 @@ export const FloatingWidget: React.FC = () => {
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => {
+                  setDisplayMode('fullscreen');
                   setIsOpen(false);
                   navigate('/workbench');
                 }}

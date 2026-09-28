@@ -15,6 +15,7 @@ class OrderItemDTO(BaseModel):
 
 
 class OrderWritebackDTO(BaseModel):
+    order_no: Optional[str] = Field(default=None, description="指定订单号(用于幂等重试与唯一标识)")
     source_draft_id: Optional[str] = Field(default=None, description="TradeDoc AI 草稿流水号")
     order_type: str = Field(default="SALES", description="单据类型: SALES(销售订单) / PURCHASE(采购订单)")
     contract_no: str = Field(..., description="关联主合同编号")
@@ -30,11 +31,31 @@ class OrderWritebackDTO(BaseModel):
     operator_dept: str = Field(default="物资贸易一部", description="经办部门")
 
 
+class ApprovalCallbackRequest(BaseModel):
+    order_no: str = Field(..., description="被审批的订单号")
+    action: Optional[str] = Field(default=None, description="审批动作: APPROVE/REJECT/RETURN/PASS")
+    decision: Optional[str] = Field(default=None, description="裁决决策: PASS/RETURN/REJECT")
+    approver_name: str = Field(default="审批人", description="审批人姓名")
+    approver_dept: Optional[str] = Field(default="商贸风控审批部", description="审批人部门")
+    comment: Optional[str] = Field(default=None, description="审批意见/理由")
+    approval_comment: Optional[str] = Field(default=None, description="审批意见别名")
+    approval_time: Optional[str] = Field(default=None, description="审批时间 ISO8601")
+
+
 class ApprovalCallbackDTO(BaseModel):
-    decision: Literal["PASS", "RETURN", "REJECT"] = Field(..., description="裁决结果: PASS(通过) / RETURN(退回) / REJECT(驳回)")
+    decision: Literal["PASS", "RETURN", "REJECT", "APPROVE"] = Field(..., description="裁决结果: PASS(通过) / RETURN(退回) / REJECT(驳回)")
     approver_name: str = Field(..., description="审批人姓名")
     approval_comment: Optional[str] = Field(default=None, description="审批意见")
     approval_time: Optional[str] = Field(default=None, description="审批时间 ISO8601")
+
+
+class ContractQuotaOut(BaseModel):
+    contract_no: str
+    total_amount: float
+    accumulated_amount: float
+    remaining_amount: float
+    utilization_rate: float
+    is_over_quota: bool
 
 
 class OrderOut(BaseModel):
@@ -49,6 +70,7 @@ class OrderOut(BaseModel):
     items: List[OrderItemDTO]
     total_amount: float
     erp_status: str
+    order_status: Optional[str] = None
     is_special_approved: bool
     special_approval_reason: Optional[str] = None
     operator_name: str

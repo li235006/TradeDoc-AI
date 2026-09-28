@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useTradeStore } from '../../stores/useTradeStore';
 import { tradeApi } from '../../services/api';
 import {
   Layers,
   Sparkles,
   FileSpreadsheet,
-  Database,
-  Maximize2,
-  Minimize2
+  Database
 } from 'lucide-react';
 
 const titleMap: Record<string, { title: string; subtitle: string; icon: React.ComponentType<{ className?: string }> }> = {
@@ -20,7 +17,6 @@ const titleMap: Record<string, { title: string; subtitle: string; icon: React.Co
 
 export const Header: React.FC = () => {
   const location = useLocation();
-  const { displayMode, toggleDisplayMode } = useTradeStore();
   const [healthStatus, setHealthStatus] = useState<{ online: boolean; checking: boolean }>({
     online: true,
     checking: false,
@@ -40,8 +36,7 @@ export const Header: React.FC = () => {
         setHealthStatus((prev) => ({ ...prev, checking: true }));
         await tradeApi.checkHealth();
         setHealthStatus({ online: true, checking: false });
-      } catch (e) {
-        // 如果后端还在起，暂显离线或待连
+      } catch {
         setHealthStatus({ online: false, checking: false });
       }
     };
@@ -51,7 +46,7 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className="h-14 px-6 flex items-center justify-between frosted-glass border-b border-black/[0.06] flex-shrink-0 z-10">
+    <header className="h-14 px-6 flex items-center justify-between frosted-glass border-b border-black/[0.06] flex-shrink-0 z-10 bg-white">
       {/* Title & Path */}
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-hig flex items-center justify-center bg-black/[0.04] text-hig-gray-800">
@@ -84,25 +79,6 @@ export const Header: React.FC = () => {
             </>
           )}
         </div>
-
-        {/* Display Mode Toggle */}
-        <button
-          onClick={toggleDisplayMode}
-          title="切换全屏/悬浮模态"
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-hig border border-black/[0.08] hover:bg-black/[0.04] active:bg-black/[0.08] transition text-xs font-medium text-hig-gray-700"
-        >
-          {displayMode === 'fullscreen' ? (
-            <>
-              <Minimize2 className="w-3.5 h-3.5 text-hig-gray-600" />
-              <span>悬浮窗模式</span>
-            </>
-          ) : (
-            <>
-              <Maximize2 className="w-3.5 h-3.5 text-hig-gray-600" />
-              <span>全屏工作台</span>
-            </>
-          )}
-        </button>
       </div>
     </header>
   );

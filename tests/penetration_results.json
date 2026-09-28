@@ -1,0 +1,110 @@
+[
+  {
+    "case_id": "TC-ENV-01",
+    "case_name": "后端核心服务健康探针检查",
+    "status": "PASS",
+    "details": "Status: UP, DBs: CONNECTED/CONNECTED",
+    "timestamp": "2026-09-28T21:00:26.149593",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-ENV-02",
+    "case_name": "模拟中台 (Mock ERP) 健康探针检查",
+    "status": "PASS",
+    "details": "Status: UP, MongoDB: CONNECTED",
+    "timestamp": "2026-09-28T21:00:26.151282",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-ENV-03",
+    "case_name": "前端 Vite 宿主容器访问探针",
+    "status": "PASS",
+    "details": "HTTP Code: 200, Title verified",
+    "timestamp": "2026-09-28T21:00:26.152686",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-CASE-D",
+    "case_name": "现场黑话与标准物料两阶段语义对齐",
+    "status": "PASS",
+    "details": "'给中建八局下200吨18螺纹，...' -> STL-RB-400E-20(热轧带肋钢筋) | '采购50吨10个厚普板，走20...' -> STL-PL-Q235-10(普碳钢板) | '送100米57管到工地，走20...' -> PIP-SM-20G-57(无缝钢管) | '急需10台50闸阀安装，走20...' -> VLV-GT-Z41H-50(铸钢法兰闸阀)",
+    "timestamp": "2026-09-28T21:00:26.206871",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-CASE-A",
+    "case_name": "Case A: 额度充裕合规订单一键提单直接生效与中台同步",
+    "status": "PASS",
+    "details": "单号: XSDD-WZGS-20260928-119, 状态: ACTIVE, 中台状态: AUDITED, 提单前额度: ¥7,966,900.00, 提单后额度: ¥7,954,900.00, 扣减金额: ¥12,000.00",
+    "timestamp": "2026-09-28T21:00:26.729819",
+    "payload_summary": {
+      "order_no": "XSDD-WZGS-20260928-119"
+    }
+  },
+  {
+    "case_id": "TC-CASE-B",
+    "case_name": "Case B: 高价预警拦截、说明补全特批提报与审批放行闭环",
+    "status": "PASS",
+    "details": "直接提交拦截: True, 特批提报状态: PENDING_SPECIAL_APPROVAL, 审批通过后状态: ACTIVE, 中台终态: COMPLETED",
+    "timestamp": "2026-09-28T21:00:27.301745",
+    "payload_summary": {
+      "order_no": "XSDD-WZGS-20260928-120"
+    }
+  },
+  {
+    "case_id": "TC-CASE-C",
+    "case_name": "Case C: 合同超额特批拦截与过期合同硬性不可特批阻断",
+    "status": "PASS",
+    "details": "C1未填说明拦截: True, C1特批成功: True, C2过期合同绝对阻断: True (提示: 订单合规严重拦截 (合同失效或物资未对齐不可特批): 单据存在合规阻断项，无法直接提单生效)",
+    "timestamp": "2026-09-28T21:00:27.348053",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-CASE-E",
+    "case_name": "Case E: Excel 表格批量流式解析、逐行异常诊断与纠错提单",
+    "status": "PASS",
+    "details": "总行数: 5, 合规通过行: 3, 异常标红行: 2, 第4行缺单价识别: True, 第5行假合同识别: True, 批量单据提交: True",
+    "timestamp": "2026-09-28T21:00:27.393881",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-STEP7-01",
+    "case_name": "待特批单据唤起抽屉数据核查与4项指标看板联动",
+    "status": "PASS",
+    "details": "单号: XSDD-WZGS-20260928-123, 特批说明与指标加载正常",
+    "timestamp": "2026-09-28T21:00:27.414614",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-STEP7-04",
+    "case_name": "三态流转[PASS审批通过]: 状态生效、配额原子扣减¥20万、中台无刷新台账更新",
+    "status": "PASS",
+    "details": "终态: COMPLETED, 额度变动: ¥-850,000.00 -> ¥-1,050,000.00",
+    "timestamp": "2026-09-28T21:00:27.439762",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-STEP7-05",
+    "case_name": "三态流转[RETURN退回修改]: 状态变更为已退回、合同配额无损",
+    "status": "PASS",
+    "details": "终态: RETURNED, 批注: 请补充项目业主签收联与增补备忘录盖章件后再报",
+    "timestamp": "2026-09-28T21:00:27.475655",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-STEP7-06",
+    "case_name": "三态流转[REJECT审批驳回]: 状态推进已驳回作废、单据终结、额度无损",
+    "status": "PASS",
+    "details": "终态: REJECTED, 驳回意见: 超额比例过高且未补充增补合同协议，存在重大法律风控敞口，予以驳回终结。",
+    "timestamp": "2026-09-28T21:00:27.513822",
+    "payload_summary": {}
+  },
+  {
+    "case_id": "TC-UI-AUDIT",
+    "case_name": "UI 业务语言规范与底层技术报错遮蔽审计",
+    "status": "PASS",
+    "details": "拦截返回: code=400, message='缺少必需的请求头 Idempotency-Key', 违禁词审计: CLEAN",
+    "timestamp": "2026-09-28T21:00:27.515601",
+    "payload_summary": {}
+  }
+]

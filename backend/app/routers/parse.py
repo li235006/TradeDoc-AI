@@ -2,17 +2,19 @@ import logging
 from datetime import datetime, timezone
 from typing import Optional
 from fastapi import APIRouter, Depends, UploadFile, File, Form
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 try:
     from app.db import get_mongo_db
-    from app.schemas.parse import ParseChatRequest, ParseResultData
+    from app.schemas.parse import ParseChatRequest, ParseResultData, ExcelParseResultData
     from app.services.parser import order_parser_service
+    from app.services.excel_parser import excel_parser_service
 except ImportError:
     from backend.app.db import get_mongo_db
-    from backend.app.schemas.parse import ParseChatRequest, ParseResultData
+    from backend.app.schemas.parse import ParseChatRequest, ParseResultData, ExcelParseResultData
     from backend.app.services.parser import order_parser_service
+    from backend.app.services.excel_parser import excel_parser_service
 
 logger = logging.getLogger("tradedoc.parse.router")
 router = APIRouter()
@@ -72,3 +74,46 @@ async def parse_ocr(
             "timestamp": datetime.now(timezone.utc).isoformat(),
         },
     )
+
+
+@router.get("/excel/template", summary="下载标准 Excel 导入模板")
+async def download_excel_template():
+    """
+    EP-03 附件：下载标准商贸订单 Excel 导入模板
+    包含蓝底白字表头、字段宽度优化与标准两行示例数据
+    """
+    stream = excel_parser_service.generate_template()
+    return StreamingResponse(
+        stream,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={
+            "Content-Disposition": "attachment; filename=TradeDoc_Order_Template.xlsx"
+        },
+    )
+
+
+@router.post("/excel", summary="批量 Excel 订单表格穿透解析与合规校验")
+async def parse_excel(
+    file: UploadFile = File(..., description="待解析的 Excel 文件 (.xlsx 或 .xls)"),
+    db: AsyncIOMotorDatabase = Depends(get_mongo_db),
+):
+    """
+    EP-03 批量 Excel 提单解析与行级穿透合规校验端点：
+    支持标准/非标准列名容错映射、合同有效性、物料编码/品名语义对齐、单价 ±15% 偏离预警及数量核查
+    """
+    file_bytes = await file.read()
+    result: ExcelParseResultData = await excel_parser_service.parse_excel(
+        file_bytes=file_bytes,
+        filename=file.filename or "upload.xlsx",
+        db=db,
+    )
+    return JSONResponse(
+        status_code=200,
+        content={
+            "code": 200,
+            "message": "批量文件解析校验完成",
+            "data": result.model_dump(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    )
+

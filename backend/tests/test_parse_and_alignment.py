@@ -183,3 +183,29 @@ async def test_parse_ocr_pdf_endpoint():
     assert data["draft"]["items"][0]["quantity"] == 1000.0
     assert "57管" in data["ocr_raw_text"]
     assert data["compliance"]["level"] == "PASS"
+
+
+@pytest.mark.asyncio
+async def test_parse_chat_no_fake_defaults():
+    """AC-05: 验证当文本缺失数量/合同/未知物料时，不产生默认伪造值"""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        # 1. 缺失合同编号与数量
+        res1 = await ac.post("/api/v1/parse/chat", json={"text": "采购57管，送到相城项目"})
+        assert res1.status_code == 200
+        d1 = res1.json()["data"]
+        assert d1["draft"]["contract_no"] == ""  # 不默认 2026-WZ-089
+        assert d1["draft"]["items"][0]["quantity"] == 0.0  # 不默认 100 吨
+        assert "未识别到关联合同编号" in d1["clarification"]
+
+        # 2. 未匹配物料不回退默认 STL-RB-400E-20
+        res2 = await ac.post(
+            "/api/v1/parse/chat",
+            json={"text": "走2026-WZ-090合同，订购50吨绝密特种未知材料"},
+        )
+        assert res2.status_code == 200
+        d2 = res2.json()["data"]
+        item = d2["draft"]["items"][0]
+        assert item["match_status"] == "UNMATCHED"
+        assert item["material_code"] == ""  # 不回退默认编码
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FileCheck,
   Plus,
@@ -13,65 +14,84 @@ import {
   FileText,
   MapPin,
   User,
-  ChevronDown
+  ChevronDown,
+  Minimize2
 } from 'lucide-react';
 import { useTradeStore } from '../../stores/useTradeStore';
 import { orderApi } from '../../services/orderApi';
+import { apiClient } from '../../services/api';
 import { ComplianceBoard } from '../compliance/ComplianceBoard';
 import { SpecialApprovalPrompt } from '../compliance/SpecialApprovalPrompt';
 import { MaterialAlignmentBadge } from './MaterialAlignmentBadge';
-import { OrderItem } from '../../types';
+import { OrderItem, ApiResponse } from '../../types';
 
-// 常用关联合同选项
-const QUICK_CONTRACTS = [
-  {
-    contract_no: '2026-WZ-089',
-    contract_name: '科技城项目大宗钢材采销年度合同',
-    counterparty_name: '中建八局第一建设有限公司',
-    project_name: '科技城数字经济产业园一期项目',
-    default_delivery_address: '苏州市高新区科技城 1 号工地物资中转站',
-    contact_person: '张建国 (13812345678)',
-    contract_total_amount: 5000000.0,
-    accumulated_order_amount: 4850000.0,
-    accumulated_order_count: 18,
-    remaining_quota_amount: 150000.0,
-    remaining_order_count: 2,
-  },
-  {
-    contract_no: '2026-WZ-090',
-    contract_name: '苏州轨道交通工程水泥采购总协议',
-    counterparty_name: '中铁十二局集团第二工程有限公司',
-    project_name: '苏州轨道交通 8 号线工程土建 03 标',
-    default_delivery_address: '苏州市相城区阳澄湖中路站中铁十二局项目部',
-    contact_person: '王工 (13923456789)',
-    contract_total_amount: 3200000.0,
-    accumulated_order_amount: 1200000.0,
-    accumulated_order_count: 5,
-    remaining_quota_amount: 2000000.0,
-    remaining_order_count: 15,
-  },
-  {
-    contract_no: '2026-WZ-091',
-    contract_name: '市政综合管廊特种管材年度框架',
-    counterparty_name: '江苏省建工集团有限公司',
-    project_name: '工业园区金鸡湖大道地下综合管廊二期',
-    default_delivery_address: '苏州市工业园区金鸡湖大道 88 号地下管廊 2 号竖井',
-    contact_person: '李主管 (13734567890)',
-    contract_total_amount: 4500000.0,
-    accumulated_order_amount: 4400000.0,
-    accumulated_order_count: 19,
-    remaining_quota_amount: 100000.0,
-    remaining_order_count: 1,
-  },
-];
+interface ContractOption {
+  contract_no: string;
+  contract_name?: string;
+  counterparty_name: string;
+  project_name: string;
+  default_delivery_address?: string;
+  contact_person?: string;
+  total_amount: number;
+  accumulated_amount?: number;
+  remaining_amount?: number;
+  max_orders?: number;
+  max_order_count?: number;
+  accumulated_orders?: number;
+  accumulated_order_count?: number;
+  remaining_orders?: number;
+  remaining_order_count?: number;
+}
+
+interface MaterialOption {
+  material_code: string;
+  material_name: string;
+  specification: string;
+  unit: string;
+  standard_price?: number;
+  guide_price?: number;
+}
 
 export const OrderForm: React.FC = () => {
-  const { draft, quota, setDraft, updateDraftItem, removeDraftItem, addDraftItem, resetDraft, setQuota } =
-    useTradeStore();
+  const navigate = useNavigate();
+  const {
+    draft,
+    quota,
+    setDraft,
+    updateDraftItem,
+    removeDraftItem,
+    addDraftItem,
+    resetDraft,
+    setQuota,
+    setDisplayMode,
+  } = useTradeStore();
 
+  const [contracts, setContracts] = useState<ContractOption[]>([]);
+  const [materials, setMaterials] = useState<MaterialOption[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSpecialValid, setIsSpecialValid] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  // 从真实 API 加载合同与物料主数据字典
+  useEffect(() => {
+    const loadMasterData = async () => {
+      try {
+        const [cRes, mRes] = await Promise.all([
+          apiClient.get<ApiResponse<ContractOption[]>>('/master/contracts'),
+          apiClient.get<ApiResponse<MaterialOption[]>>('/master/materials'),
+        ]);
+        if (cRes.data?.data) {
+          setContracts(cRes.data.data);
+        }
+        if (mRes.data?.data) {
+          setMaterials(mRes.data.data);
+        }
+      } catch {
+        // 主数据加载容错，不阻断手动编辑
+      }
+    };
+    loadMasterData();
+  }, []);
 
   // 监听并动态核算合同额度与超额诊断
   useEffect(() => {
@@ -90,47 +110,53 @@ export const OrderForm: React.FC = () => {
     }
   }, [draft.total_amount, quota.remaining_quota_amount]);
 
-  // 选择常用合同
+  // 选择关联合同 (从真实合同主数据驱动)
   const handleSelectContract = (contractNo: string) => {
-    const found = QUICK_CONTRACTS.find((c) => c.contract_no === contractNo);
+    const found = contracts.find((c) => c.contract_no === contractNo);
     if (found) {
+      const remainingAmount = Number(
+        found.remaining_amount ?? (found.total_amount - (found.accumulated_amount || 0))
+      );
       setDraft({
         contract_no: found.contract_no,
         counterparty_name: found.counterparty_name,
         project_name: found.project_name,
-        delivery_address: found.default_delivery_address,
-        contact_person: found.contact_person,
+        delivery_address: found.default_delivery_address || '',
+        contact_person: found.contact_person || '',
       });
       setQuota({
         contract_no: found.contract_no,
         counterparty_name: found.counterparty_name,
         project_name: found.project_name,
-        contract_total_amount: found.contract_total_amount,
-        accumulated_order_amount: found.accumulated_order_amount,
-        accumulated_order_count: found.accumulated_order_count,
-        remaining_quota_amount: found.remaining_quota_amount,
-        remaining_order_count: found.remaining_order_count,
-        is_over_quota: draft.total_amount > found.remaining_quota_amount,
+        contract_total_amount: found.total_amount,
+        accumulated_order_amount: found.accumulated_amount || 0,
+        accumulated_order_count: found.accumulated_orders ?? found.accumulated_order_count ?? 0,
+        remaining_quota_amount: remainingAmount,
+        remaining_order_count: found.remaining_orders ?? found.remaining_order_count ?? 0,
+        is_over_quota: draft.total_amount > remainingAmount,
         over_amount:
-          draft.total_amount > found.remaining_quota_amount
-            ? Number((draft.total_amount - found.remaining_quota_amount).toFixed(2))
+          draft.total_amount > remainingAmount
+            ? Number((draft.total_amount - remainingAmount).toFixed(2))
             : 0,
       });
     }
   };
 
-  // 添加空物料行
+  // 添加空物料行 (从真实物料主数据选型)
   const handleAddRow = () => {
     const nextSeq = draft.items.length + 1;
+    const firstMat = materials.length > 0 ? materials[0] : null;
+    const price = Number(firstMat?.standard_price ?? firstMat?.guide_price ?? 3500);
+
     const newItem: OrderItem = {
       item_seq: nextSeq,
-      material_code: `01.01.${String(nextSeq).padStart(4, '0')}`,
-      material_name: '新增物料',
-      specification: '标准规格',
+      material_code: firstMat?.material_code || `01.01.${String(nextSeq).padStart(4, '0')}`,
+      material_name: firstMat?.material_name || '新物资品名',
+      specification: firstMat?.specification || '标准规格型号',
       quantity: 1,
-      unit: '吨',
-      unit_price: 3500,
-      total_amount: 3500,
+      unit: firstMat?.unit || '吨',
+      unit_price: price,
+      total_amount: price,
       match_status: 'ALIGNED',
     };
     addDraftItem(newItem);
@@ -143,8 +169,8 @@ export const OrderForm: React.FC = () => {
     try {
       const res = await orderApi.saveDraft(draft);
       setFeedback({ type: 'success', message: res.message || '草稿已成功暂存至业务数据库' });
-    } catch {
-      setFeedback({ type: 'error', message: '暂存失败，请检查网络或配置' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '暂存失败，请检查网络或后端状态' });
     } finally {
       setIsSubmitting(false);
       setTimeout(() => setFeedback(null), 4000);
@@ -189,8 +215,8 @@ export const OrderForm: React.FC = () => {
         message: `正式提单成功！订单编号：${res.data.order_no}，已同步回写ERP系统`,
       });
       setDraft({ order_status: 'ACTIVE', order_no: res.data.order_no });
-    } catch {
-      setFeedback({ type: 'error', message: '正式提单提交异常，请稍后重试' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '正式提单提交异常，请稍后重试' });
     } finally {
       setIsSubmitting(false);
       setTimeout(() => setFeedback(null), 5000);
@@ -232,8 +258,8 @@ export const OrderForm: React.FC = () => {
         message: `超额特批申请已提交！单号：${res.data.order_no}，进入业务主管待审流`,
       });
       setDraft({ order_status: 'PENDING_SPECIAL_APPROVAL', order_no: res.data.order_no });
-    } catch {
-      setFeedback({ type: 'error', message: '特批提交失败，请联系系统管理员' });
+    } catch (err: any) {
+      setFeedback({ type: 'error', message: err?.message || '特批提交失败，请联系系统管理员' });
     } finally {
       setIsSubmitting(false);
       setTimeout(() => setFeedback(null), 5000);
@@ -255,6 +281,20 @@ export const OrderForm: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* 缩小为悬浮窗 */}
+          <button
+            type="button"
+            onClick={() => {
+              setDisplayMode('floating');
+              navigate('/erp');
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-hig border border-[#CBD5E1] bg-white hover:bg-slate-50 text-xs font-semibold text-[#0071E3] transition shadow-xs"
+            title="缩小为右下角轻量悬浮球，切换至供应链宿主大盘"
+          >
+            <Minimize2 className="w-3.5 h-3.5" />
+            <span>缩小为悬浮窗</span>
+          </button>
+
           {/* 单据类型切换 */}
           <div className="flex items-center bg-black/[0.04] p-0.5 rounded-hig">
             <button
@@ -333,17 +373,17 @@ export const OrderForm: React.FC = () => {
               <span>合同主档与基本信息</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-hig-gray-500 font-normal">快速选择主合同：</span>
+              <span className="text-[11px] text-hig-gray-500 font-normal">快速关联生效合同：</span>
               <div className="relative">
                 <select
                   value={draft.contract_no}
                   onChange={(e) => handleSelectContract(e.target.value)}
                   className="text-xs bg-white border border-[#CBD5E1] rounded-hig px-2 py-1 pr-6 focus:outline-none focus:ring-1 focus:ring-[#0071E3] appearance-none"
                 >
-                  <option value="">-- 选择生效合同 --</option>
-                  {QUICK_CONTRACTS.map((c) => (
+                  <option value="">-- 选择主数据合同 --</option>
+                  {contracts.map((c) => (
                     <option key={c.contract_no} value={c.contract_no}>
-                      {c.contract_no} ({c.contract_name})
+                      {c.contract_no} ({c.contract_name || c.project_name || c.counterparty_name})
                     </option>
                   ))}
                 </select>

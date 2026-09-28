@@ -90,6 +90,14 @@ export const tradeApi = {
     return res.data;
   },
 
+  // EP-03 附件: 下载标准 Excel 导入模板 (GET /api/parse/excel/template)
+  downloadExcelTemplate: async (): Promise<Blob> => {
+    const res = await apiClient.get('/parse/excel/template', {
+      responseType: 'blob',
+    });
+    return res.data;
+  },
+
   // EP-03: Excel 批量表格逐行解析校验 (POST /api/parse/excel)
   parseExcel: async (file: File): Promise<ApiResponse<ExcelParseResult>> => {
     const formData = new FormData();
@@ -131,11 +139,19 @@ export const tradeApi = {
   // EP-06: 审批人裁决流转 (POST /api/orders/{order_no}/approve)
   approveOrder: async (
     orderNo: string,
-    payload: OrderApproveRequest
+    payload: OrderApproveRequest,
+    customHeaders?: Record<string, string>
   ): Promise<ApiResponse<OrderApproveResult>> => {
+    const headers: Record<string, string> = {
+      'X-User-Name': payload.approver_name || '陈总监',
+      'X-User-Role': 'APPROVER',
+      'X-User-Dept': payload.approver_dept || '商务风控部',
+      ...customHeaders,
+    };
     const res = await apiClient.post<ApiResponse<OrderApproveResult>>(
       `/orders/${encodeURIComponent(orderNo)}/approve`,
-      payload
+      payload,
+      { headers }
     );
     return res.data;
   },

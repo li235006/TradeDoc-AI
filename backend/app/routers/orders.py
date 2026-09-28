@@ -7,18 +7,22 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 
 try:
     from app.db import get_mongo_db
+    from app.core.exceptions import BusinessException
     from app.schemas.orders import (
         DraftCreateRequest,
         DraftUpdateRequest,
         OrderSubmitRequest,
+        OrderApprovalRequest,
     )
     from app.services.order_service import order_service
 except ImportError:
     from backend.app.db import get_mongo_db
+    from backend.app.core.exceptions import BusinessException
     from backend.app.schemas.orders import (
         DraftCreateRequest,
         DraftUpdateRequest,
         OrderSubmitRequest,
+        OrderApprovalRequest,
     )
     from backend.app.services.order_service import order_service
 
@@ -81,8 +85,10 @@ async def submit_order(
 ):
     """
     EP-04 正式提单提交：
-    验证合规状态，超额未填特批理由严格阻断；通过后写入 db.orders 并标记草稿为 SUBMITTED
+    验证合规状态，超额未填特批理由严格阻断；强制 Idempotency-Key；通过后写入 db.orders 并标记草稿为 SUBMITTED
     """
+    if not idempotency_key or not idempotency_key.strip():
+        raise BusinessException(message="缺少必需的请求头 Idempotency-Key", code=400)
     result = await order_service.submit_order(req, db, idempotency_key=idempotency_key, is_special_submission=False)
     msg = "提单成功，订单已生效" if result.order_status == "ACTIVE" else "超额特批申请已提交，等待业务审批人审核"
     return make_response(code=200, message=msg, data=result.model_dump())
@@ -96,10 +102,38 @@ async def submit_special_order(
 ):
     """
     EP-05 超额特批申请提交：
-    强制校验不少于10字特批说明，写入待特批订单
+    强制校验不少于10字特批说明，强制 Idempotency-Key，写入待特批订单
     """
+    if not idempotency_key or not idempotency_key.strip():
+        raise BusinessException(message="缺少必需的请求头 Idempotency-Key", code=400)
     result = await order_service.submit_order(req, db, idempotency_key=idempotency_key, is_special_submission=True)
     return make_response(code=200, message="超额特批申请已提交，等待业务审批人审核", data=result.model_dump())
+
+
+@router.post("/{order_no}/approve", summary="EP-06 订单审批流转裁决")
+async def approve_order(
+    order_no: str,
+    req: OrderApprovalRequest,
+    x_user_name: Optional[str] = Header(None, alias="X-User-Name"),
+    x_user_dept: Optional[str] = Header(None, alias="X-User-Dept"),
+    x_user_role: Optional[str] = Header(None, alias="X-User-Role"),
+    db: AsyncIOMotorDatabase = Depends(get_mongo_db),
+):
+    """
+    EP-06 订单审批流转裁决：
+    - 接收 action ('APPROVE'|'REJECT') 或 decision ('PASS'|'RETURN'|'REJECT')
+    - 从请求头 X-User-Name、X-User-Dept、X-User-Role 获取审批人身份
+    - 审批通过后调用 Mock ERP 回写与审批回调
+    """
+    result = await order_service.approve_order(
+        order_no=order_no,
+        req=req,
+        db=db,
+        header_name=x_user_name,
+        header_dept=x_user_dept,
+        header_role=x_user_role,
+    )
+    return make_response(code=200, message="订单审批流转成功", data=result.model_dump())
 
 
 @router.get("", summary="获取商贸订单台账列表")

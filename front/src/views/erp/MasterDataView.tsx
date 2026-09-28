@@ -1,154 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FileText,
   Search,
-  Plus,
   ArrowRight,
   CheckCircle2,
   AlertCircle,
   Tag,
   Package,
   Copy,
-  Check
+  Check,
+  RefreshCw
 } from 'lucide-react';
+import { apiClient } from '../../services/api';
+import { ApiResponse } from '../../types';
 
 interface ContractMasterItem {
   contract_no: string;
-  contract_name: string;
+  contract_name?: string;
   counterparty_name: string;
   project_name: string;
   total_amount: number;
   accumulated_amount: number;
   remaining_amount: number;
-  max_orders: number;
-  accumulated_orders: number;
-  remaining_orders: number;
-  status: 'ACTIVE' | 'EXPIRED' | 'TERMINATED';
-  valid_until: string;
-  default_delivery_address: string;
+  max_orders?: number;
+  accumulated_orders?: number;
+  remaining_orders?: number;
+  max_order_count?: number;
+  accumulated_order_count?: number;
+  remaining_order_count?: number;
+  status: 'ACTIVE' | 'EXPIRED' | 'TERMINATED' | string;
+  valid_until?: string;
+  default_delivery_address?: string;
 }
 
 interface MaterialMasterItem {
   material_code: string;
   material_name: string;
   specification: string;
-  category: string;
+  category?: string;
   unit: string;
-  guide_price: number;
+  guide_price?: number;
+  standard_price?: number;
   aliases: string[];
 }
-
-const CONTRACT_DATA: ContractMasterItem[] = [
-  {
-    contract_no: '2026-WZ-089',
-    contract_name: '科技城项目大宗钢材采销年度合同',
-    counterparty_name: '中建八局第一建设有限公司',
-    project_name: '科技城数字经济产业园一期项目',
-    total_amount: 5000000.0,
-    accumulated_amount: 4850000.0,
-    remaining_amount: 150000.0,
-    max_orders: 20,
-    accumulated_orders: 18,
-    remaining_orders: 2,
-    status: 'ACTIVE',
-    valid_until: '2026-12-31',
-    default_delivery_address: '苏州市高新区科技城 1 号工地物资中转站',
-  },
-  {
-    contract_no: '2026-WZ-090',
-    contract_name: '苏州轨道交通工程水泥采购总协议',
-    counterparty_name: '中铁十二局集团有限公司',
-    project_name: '苏州轨道交通 8 号线 3 标',
-    total_amount: 10000000.0,
-    accumulated_amount: 2000000.0,
-    remaining_amount: 8000000.0,
-    max_orders: 50,
-    accumulated_orders: 5,
-    remaining_orders: 45,
-    status: 'ACTIVE',
-    valid_until: '2026-12-31',
-    default_delivery_address: '苏州市工业园区娄葑工地',
-  },
-  {
-    contract_no: '2025-WZ-012',
-    contract_name: '郑州保税物流仓储特钢采购协议',
-    counterparty_name: '中原特钢实业有限公司',
-    project_name: '郑州保税物流仓储扩建工程',
-    total_amount: 3000000.0,
-    accumulated_amount: 1200000.0,
-    remaining_amount: 1800000.0,
-    max_orders: 30,
-    accumulated_orders: 18,
-    remaining_orders: 12,
-    status: 'EXPIRED',
-    valid_until: '2025-12-31',
-    default_delivery_address: '郑州经开区综合保税区仓库',
-  },
-  {
-    contract_no: '2026-WZ-053',
-    contract_name: '现代产业园管材五金采销框架合同',
-    counterparty_name: '苏州工业园区建投有限公司',
-    project_name: '现代产业园三期项目',
-    total_amount: 6500000.0,
-    accumulated_amount: 2100000.0,
-    remaining_amount: 4400000.0,
-    max_orders: 25,
-    accumulated_orders: 7,
-    remaining_orders: 18,
-    status: 'ACTIVE',
-    valid_until: '2026-11-30',
-    default_delivery_address: '苏州市工业园区唯亭街道产业园项目部',
-  },
-];
-
-const MATERIAL_DATA: MaterialMasterItem[] = [
-  {
-    material_code: 'STL-RB-400E-20',
-    material_name: '热轧带肋钢筋',
-    specification: 'HRB400E Φ20mm',
-    category: '建筑钢材',
-    unit: '吨',
-    guide_price: 4000.0,
-    aliases: ['18螺纹', '20螺纹', '400E 20圆钢', '20厘螺纹钢', '三级螺纹钢20'],
-  },
-  {
-    material_code: 'STL-PL-Q235-10',
-    material_name: '普碳钢板',
-    specification: 'Q235B 10*1500*6000',
-    category: '建筑钢材',
-    unit: '吨',
-    guide_price: 4200.0,
-    aliases: ['10个厚', 'Q235中板', '10厘板', '10厚普板'],
-  },
-  {
-    material_code: 'PIP-SM-20G-57',
-    material_name: '无缝钢管',
-    specification: '20G Φ57*3.5',
-    category: '管材型材',
-    unit: '米',
-    guide_price: 120.0,
-    aliases: ['57管', '20G无缝管', '57无缝钢管', '57小口径管'],
-  },
-  {
-    material_code: 'VLV-GT-Z41H-50',
-    material_name: '铸钢法兰闸阀',
-    specification: 'Z41H-16C DN50',
-    category: '阀门五金',
-    unit: '台',
-    guide_price: 360.0,
-    aliases: ['50闸阀', '高压50法兰闸阀', 'DN50铸钢闸阀'],
-  },
-  {
-    material_code: 'CEM-PC-425',
-    material_name: '普通硅酸盐水泥',
-    specification: 'P.O 42.5 散装',
-    category: '水泥建材',
-    unit: '吨',
-    guide_price: 440.0,
-    aliases: ['42.5水泥', '425水泥', 'PO42.5', '42.5散装水泥', '42.5普硅水泥'],
-  },
-];
 
 export const MasterDataView: React.FC = () => {
   const navigate = useNavigate();
@@ -157,23 +52,88 @@ export const MasterDataView: React.FC = () => {
   const [materialKeyword, setMaterialKeyword] = useState('');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
+  // 真实 API 主数据状态
+  const [contracts, setContracts] = useState<ContractMasterItem[]>([]);
+  const [materials, setMaterials] = useState<MaterialMasterItem[]>([]);
+  const [loadingContracts, setLoadingContracts] = useState(false);
+  const [loadingMaterials, setLoadingMaterials] = useState(false);
+  const [contractError, setContractError] = useState<string | null>(null);
+  const [materialError, setMaterialError] = useState<string | null>(null);
+
+  // 从真实 API 获取合同主数据
+  const fetchContracts = async () => {
+    setLoadingContracts(true);
+    setContractError(null);
+    try {
+      const res = await apiClient.get<ApiResponse<ContractMasterItem[]>>('/master/contracts', {
+        params: contractKeyword ? { keyword: contractKeyword } : undefined,
+      });
+      const list = (res.data?.data || []).map((c) => ({
+        ...c,
+        contract_name: c.contract_name || `${c.counterparty_name}采购合同`,
+        max_orders: c.max_orders ?? c.max_order_count ?? 0,
+        accumulated_orders: c.accumulated_orders ?? c.accumulated_order_count ?? 0,
+        remaining_orders: c.remaining_orders ?? c.remaining_order_count ?? 0,
+        remaining_amount: c.remaining_amount ?? (c.total_amount - (c.accumulated_amount || 0)),
+      }));
+      setContracts(list);
+    } catch (err: any) {
+      setContracts([]);
+      setContractError(err?.message || '无法获取合同主数据列表');
+    } finally {
+      setLoadingContracts(false);
+    }
+  };
+
+  // 从真实 API 获取物料主数据
+  const fetchMaterials = async () => {
+    setLoadingMaterials(true);
+    setMaterialError(null);
+    try {
+      const res = await apiClient.get<ApiResponse<MaterialMasterItem[]>>('/master/materials', {
+        params: materialKeyword ? { keyword: materialKeyword } : undefined,
+      });
+      const list = (res.data?.data || []).map((m) => ({
+        ...m,
+        guide_price: m.guide_price ?? m.standard_price ?? 0,
+        category: m.category || '建筑大宗',
+        aliases: m.aliases || [],
+      }));
+      setMaterials(list);
+    } catch (err: any) {
+      setMaterials([]);
+      setMaterialError(err?.message || '无法获取物料主数据字典');
+    } finally {
+      setLoadingMaterials(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchContracts();
+  }, [contractKeyword]);
+
+  useEffect(() => {
+    fetchMaterials();
+  }, [materialKeyword]);
+
   const handleCopy = (text: string) => {
     navigator.clipboard?.writeText(text);
     setCopiedCode(text);
     setTimeout(() => setCopiedCode(null), 1500);
   };
 
-  const filteredContracts = CONTRACT_DATA.filter((item) => {
+  const filteredContracts = contracts.filter((item) => {
     if (!contractKeyword) return true;
     const kw = contractKeyword.toLowerCase();
     return (
       item.contract_no.toLowerCase().includes(kw) ||
+      (item.contract_name && item.contract_name.toLowerCase().includes(kw)) ||
       item.counterparty_name.toLowerCase().includes(kw) ||
       item.project_name.toLowerCase().includes(kw)
     );
   });
 
-  const filteredMaterials = MATERIAL_DATA.filter((item) => {
+  const filteredMaterials = materials.filter((item) => {
     if (!materialKeyword) return true;
     const kw = materialKeyword.toLowerCase();
     return (
@@ -183,6 +143,9 @@ export const MasterDataView: React.FC = () => {
       item.aliases.some((a) => a.toLowerCase().includes(kw))
     );
   });
+
+  const activeContractsCount = contracts.filter((c) => c.status === 'ACTIVE').length;
+  const totalAliasesCount = materials.reduce((sum, m) => sum + (m.aliases?.length || 0), 0);
 
   return (
     <div className="h-full flex flex-col gap-4 select-none">
@@ -223,20 +186,16 @@ export const MasterDataView: React.FC = () => {
 
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-hig bg-[#F8FAFC] border border-[#E2E8F0]">
-            <span className="text-[11px] text-[#64748B]">执行中销售合同</span>
-            <span className="text-xs font-bold text-[#0F172A]">28 份</span>
-          </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-hig bg-[#F8FAFC] border border-[#E2E8F0]">
-            <span className="text-[11px] text-[#64748B]">执行中采购合同</span>
-            <span className="text-xs font-bold text-[#0071E3]">16 份</span>
+            <span className="text-[11px] text-[#64748B]">执行中有效合同</span>
+            <span className="text-xs font-bold text-[#0F172A]">{activeContractsCount} 份</span>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-hig bg-[#F8FAFC] border border-[#E2E8F0]">
             <span className="text-[11px] text-[#64748B]">标准物料条目</span>
-            <span className="text-xs font-bold text-[#16A34A]">1,420 项</span>
+            <span className="text-xs font-bold text-[#16A34A]">{materials.length} 项</span>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-hig bg-[#F8FAFC] border border-[#E2E8F0]">
             <span className="text-[11px] text-[#64748B]">近义简称映射</span>
-            <span className="text-xs font-bold text-[#64748B]">3,850 条</span>
+            <span className="text-xs font-bold text-[#64748B]">{totalAliasesCount} 条</span>
           </div>
           <button
             onClick={() => navigate('/workbench')}
@@ -263,9 +222,13 @@ export const MasterDataView: React.FC = () => {
                 提单履约额度核验底座 · 自动关联签约单位与送货地址
               </p>
             </div>
-            <button className="flex items-center gap-1 px-3 py-1.5 rounded-hig bg-[#0071E3] hover:bg-[#0071E3]/90 text-white text-xs font-semibold shadow-hig-sm transition">
-              <Plus className="w-3.5 h-3.5" />
-              <span>新建合同台账</span>
+            <button
+              onClick={fetchContracts}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-hig border border-[#E2E8F0] hover:bg-[#F8FAFC] text-xs font-medium text-[#475569] transition"
+              title="重新获取合同数据"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingContracts ? 'animate-spin' : ''}`} />
+              <span>刷新</span>
             </button>
           </div>
 
@@ -282,6 +245,14 @@ export const MasterDataView: React.FC = () => {
               />
             </div>
           </div>
+
+          {/* 错误提示 */}
+          {contractError && (
+            <div className="p-2.5 bg-[#FFF1F2] border-b border-[#FECDD3] text-xs text-[#E11D48] flex items-center gap-2">
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>{contractError}</span>
+            </div>
+          )}
 
           {/* 合同表格 */}
           <div className="flex-1 overflow-y-auto">
@@ -313,7 +284,7 @@ export const MasterDataView: React.FC = () => {
                           )}
                         </button>
                       </div>
-                      <div className="text-[10px] text-[#94A3B8] mt-0.5">有效期至 {c.valid_until}</div>
+                      <div className="text-[10px] text-[#94A3B8] mt-0.5">有效期至 {c.valid_until || '长期'}</div>
                     </td>
                     <td className="py-3 px-3">
                       <div className="font-medium text-[#0F172A] truncate max-w-[200px]" title={c.counterparty_name}>
@@ -324,12 +295,12 @@ export const MasterDataView: React.FC = () => {
                       </div>
                     </td>
                     <td className="py-3 px-3 text-right font-medium text-[#0F172A]">
-                      ¥ {c.total_amount.toLocaleString('zh-CN')}
+                      ¥ {c.total_amount?.toLocaleString('zh-CN', { minimumFractionDigits: 2 })}
                       <div className="text-[10px] text-[#94A3B8]">上限 {c.max_orders} 笔</div>
                     </td>
                     <td className="py-3 px-3 text-right">
                       <div className={`font-bold ${c.remaining_amount <= 200000 ? 'text-[#E11D48]' : 'text-[#16A34A]'}`}>
-                        ¥ {c.remaining_amount.toLocaleString('zh-CN')}
+                        ¥ {c.remaining_amount?.toLocaleString('zh-CN', { minimumFractionDigits: 2 })}
                       </div>
                       <div className="text-[10px] text-[#64748B]">剩 {c.remaining_orders} 笔可用</div>
                     </td>
@@ -348,6 +319,21 @@ export const MasterDataView: React.FC = () => {
                     </td>
                   </tr>
                 ))}
+
+                {filteredContracts.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="py-12 text-center text-[#94A3B8]">
+                      {loadingContracts ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <RefreshCw className="w-4 h-4 animate-spin text-[#0071E3]" />
+                          <span>正在同步合同主数据...</span>
+                        </div>
+                      ) : (
+                        <span>暂无符合条件的合同记录</span>
+                      )}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -366,9 +352,13 @@ export const MasterDataView: React.FC = () => {
                 支持口语化简称与错别字自动校准纠错对齐标准库
               </p>
             </div>
-            <button className="flex items-center gap-1 px-3 py-1.5 rounded-hig bg-[#F1F5F9] border border-[#CBD5E1] text-[#334155] hover:bg-[#E2E8F0] text-xs font-semibold shadow-hig-sm transition">
-              <Plus className="w-3.5 h-3.5" />
-              <span>维护标准物资</span>
+            <button
+              onClick={fetchMaterials}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-hig border border-[#E2E8F0] hover:bg-[#F8FAFC] text-xs font-medium text-[#475569] transition"
+              title="重新获取物料数据"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingMaterials ? 'animate-spin' : ''}`} />
+              <span>刷新</span>
             </button>
           </div>
 
@@ -385,6 +375,14 @@ export const MasterDataView: React.FC = () => {
               />
             </div>
           </div>
+
+          {/* 错误提示 */}
+          {materialError && (
+            <div className="p-2.5 bg-[#FFF1F2] border-b border-[#FECDD3] text-xs text-[#E11D48] flex items-center gap-2">
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>{materialError}</span>
+            </div>
+          )}
 
           {/* 物料表格 */}
           <div className="flex-1 overflow-y-auto">
@@ -425,7 +423,7 @@ export const MasterDataView: React.FC = () => {
                     </td>
                     <td className="py-3 px-3 text-right">
                       <span className="font-bold text-[#0F172A]">
-                        ¥ {m.guide_price.toLocaleString('zh-CN', { minimumFractionDigits: 2 })}
+                        ¥ {Number(m.guide_price || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2 })}
                       </span>
                       <span className="text-[10px] text-[#64748B] ml-1">/ {m.unit}</span>
                     </td>
@@ -444,6 +442,21 @@ export const MasterDataView: React.FC = () => {
                     </td>
                   </tr>
                 ))}
+
+                {filteredMaterials.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="py-12 text-center text-[#94A3B8]">
+                      {loadingMaterials ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <RefreshCw className="w-4 h-4 animate-spin text-[#0071E3]" />
+                          <span>正在同步物资字典数据...</span>
+                        </div>
+                      ) : (
+                        <span>暂无符合条件的物料记录</span>
+                      )}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -452,3 +465,5 @@ export const MasterDataView: React.FC = () => {
     </div>
   );
 };
+
+export default MasterDataView;

@@ -1,0 +1,2923 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "name": "订单详情与特批审批滑出抽屉",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 900,
+      "layout": "none",
+      "fill": "#F5F5F7",
+      "clip": true,
+      "id": "dr_334",
+      "children": [
+        {
+          "type": "frame",
+          "name": "底层商贸系统ERP容器",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900,
+          "layout": "vertical",
+          "fill": "#F8F9FA",
+          "id": "dr_335",
+          "children": [
+            {
+              "type": "frame",
+              "name": "ERP全局导航顶栏",
+              "width": "fill_container",
+              "height": 52,
+              "layout": "horizontal",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "padding": [
+                0,
+                24,
+                0,
+                24
+              ],
+              "fill": "#1E293B",
+              "stroke": "#334155",
+              "strokeWidth": 1,
+              "id": "dr_336",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "ERP系统品牌与模块",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 32,
+                  "id": "dr_337",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "ERP系统品牌",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 10,
+                      "id": "dr_338",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "ERP图标",
+                          "width": 28,
+                          "height": 28,
+                          "cornerRadius": 6,
+                          "fill": "#0071E3",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "center",
+                          "id": "dr_339",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "图标字",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "bold",
+                              "fill": "#FFFFFF",
+                              "content": "TD",
+                              "id": "dr_33a"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "ERP主标题",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 15,
+                          "fontWeight": "bold",
+                          "fill": "#FFFFFF",
+                          "content": "远大商贸供应链业务系统 ERP",
+                          "id": "dr_33b"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "导航模块群",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 8,
+                      "id": "dr_33c",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "菜单-工作台",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "transparent",
+                          "id": "dr_33d",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "normal",
+                              "fill": "#94A3B8",
+                              "content": "工作台",
+                              "id": "dr_33e"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "菜单-采购管理",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "transparent",
+                          "id": "dr_33f",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "normal",
+                              "fill": "#94A3B8",
+                              "content": "采购管理",
+                              "id": "dr_33g"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "菜单-销售管理",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "#334155",
+                          "id": "dr_33h",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#38BDF8",
+                              "content": "销售管理",
+                              "id": "dr_33i"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "菜单-库存台账",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "transparent",
+                          "id": "dr_33j",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "normal",
+                              "fill": "#94A3B8",
+                              "content": "库存台账",
+                              "id": "dr_33k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "菜单-合同履约",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "transparent",
+                          "id": "dr_33l",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "normal",
+                              "fill": "#94A3B8",
+                              "content": "合同履约",
+                              "id": "dr_33m"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "菜单-财务核算",
+                          "padding": [
+                            6,
+                            12,
+                            6,
+                            12
+                          ],
+                          "cornerRadius": 6,
+                          "fill": "transparent",
+                          "id": "dr_33n",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "菜单名称",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 13,
+                              "fontWeight": "normal",
+                              "fill": "#94A3B8",
+                              "content": "财务核算",
+                              "id": "dr_33o"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "ERP用户状态区",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 16,
+                  "id": "dr_33p",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "ERP当前用户",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 8,
+                      "id": "dr_33q",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "用户头像",
+                          "library": "lucide",
+                          "icon": "user",
+                          "width": 16,
+                          "height": 16,
+                          "fill": "#38BDF8",
+                          "id": "dr_33r"
+                        },
+                        {
+                          "type": "text",
+                          "name": "用户名称",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 13,
+                          "fill": "#E2E8F0",
+                          "content": "李思远 (业务一部·经办人)",
+                          "id": "dr_33s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "ERP主内容工作区",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "padding": [
+                16,
+                24,
+                16,
+                24
+              ],
+              "gap": 14,
+              "id": "dr_33t",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "ERP页面标题与指标",
+                  "width": "fill_container",
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "dr_33u",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "页面标题组",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "id": "dr_33v",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "面包屑",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#64748B",
+                          "content": "商贸供应链系统 > 销售管理 > 销售订单综合管理大盘",
+                          "id": "dr_33w"
+                        },
+                        {
+                          "type": "text",
+                          "name": "大盘标题",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 20,
+                          "fontWeight": "bold",
+                          "fill": "#0F172A",
+                          "content": "销售订单台账明细大盘",
+                          "id": "dr_33x"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "ERP订单列表卡片",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 10,
+                  "stroke": "#E2E8F0",
+                  "strokeWidth": 1,
+                  "clip": true,
+                  "id": "dr_33y",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "表格表头",
+                      "width": "fill_container",
+                      "height": 40,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#F8FAFC",
+                      "stroke": "#E2E8F0",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "id": "dr_33z",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "表头-订单编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_340",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "订单编号",
+                              "id": "dr_341"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-单据类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_342",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "单据类型",
+                              "id": "dr_343"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-需方客户名称",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_344",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "需方客户名称",
+                              "id": "dr_345"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-关联合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_346",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "关联合同",
+                              "id": "dr_347"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-订单金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_348",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "订单金额",
+                              "id": "dr_349"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34a",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "经办人",
+                              "id": "dr_34b"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-创建时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34c",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "创建时间",
+                              "id": "dr_34d"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "表头-履约状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34e",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "履约状态",
+                              "id": "dr_34f"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格行-XSDD-WZGS-20260928-001",
+                      "width": "fill_container",
+                      "height": 48,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#EFF6FF",
+                      "stroke": "#BFDBFE",
+                      "strokeWidth": 1,
+                      "id": "dr_34g",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34h",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单号",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "XSDD-WZGS-20260928-001",
+                              "id": "dr_34i"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34j",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "类型",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#334155",
+                              "content": "销售订单",
+                              "id": "dr_34k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-客户",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34l",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "客户",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1E293B",
+                              "content": "中建八局第一建设有限公司",
+                              "id": "dr_34m"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34n",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "合同",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "2026-WZ-089 (科技城)",
+                              "id": "dr_34o"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34p",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 800,000",
+                              "id": "dr_34q"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34r",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "经办人",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#475569",
+                              "content": "李思远",
+                              "id": "dr_34s"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34t",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "时间",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#94A3B8",
+                              "content": "今日 10:24",
+                              "id": "dr_34u"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34v",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态胶囊",
+                              "padding": [
+                                3,
+                                8,
+                                3,
+                                8
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#FFF1F2",
+                              "id": "dr_34w",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "状态字",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#E11D48",
+                                  "content": "待特批 (超额)",
+                                  "id": "dr_34x"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格行-XSDD-WZGS-20260927-015",
+                      "width": "fill_container",
+                      "height": 48,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#F8FAFC",
+                      "stroke": "#F1F5F9",
+                      "strokeWidth": 1,
+                      "id": "dr_34y",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_34z",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单号",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "XSDD-WZGS-20260927-015",
+                              "id": "dr_350"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_351",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "类型",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#334155",
+                              "content": "销售订单",
+                              "id": "dr_352"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-客户",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_353",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "客户",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1E293B",
+                              "content": "上海建工集团股份有限公司",
+                              "id": "dr_354"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_355",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "合同",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "2026-WZ-075 (陆家嘴中心)",
+                              "id": "dr_356"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_357",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 1,250,000",
+                              "id": "dr_358"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_359",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "经办人",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#475569",
+                              "content": "王强",
+                              "id": "dr_35a"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35b",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "时间",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#94A3B8",
+                              "content": "昨日 16:30",
+                              "id": "dr_35c"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35d",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态胶囊",
+                              "padding": [
+                                3,
+                                8,
+                                3,
+                                8
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#DCFCE7",
+                              "id": "dr_35e",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "状态字",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#16A34A",
+                                  "content": "履约中",
+                                  "id": "dr_35f"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格行-CGDD-WZGS-20260927-009",
+                      "width": "fill_container",
+                      "height": 48,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#FFFFFF",
+                      "stroke": "#F1F5F9",
+                      "strokeWidth": 1,
+                      "id": "dr_35g",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35h",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单号",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "CGDD-WZGS-20260927-009",
+                              "id": "dr_35i"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35j",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "类型",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#334155",
+                              "content": "采购订单",
+                              "id": "dr_35k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-客户",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35l",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "客户",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1E293B",
+                              "content": "宝山钢铁股份有限公司",
+                              "id": "dr_35m"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35n",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "合同",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "2026-CG-042 (直供采购)",
+                              "id": "dr_35o"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35p",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 3,420,000",
+                              "id": "dr_35q"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35r",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "经办人",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#475569",
+                              "content": "赵晓雪",
+                              "id": "dr_35s"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35t",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "时间",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#94A3B8",
+                              "content": "昨日 14:15",
+                              "id": "dr_35u"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35v",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态胶囊",
+                              "padding": [
+                                3,
+                                8,
+                                3,
+                                8
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#DCFCE7",
+                              "id": "dr_35w",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "状态字",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#16A34A",
+                                  "content": "履约中",
+                                  "id": "dr_35x"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格行-XSDD-WZGS-20260926-031",
+                      "width": "fill_container",
+                      "height": 48,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#F8FAFC",
+                      "stroke": "#F1F5F9",
+                      "strokeWidth": 1,
+                      "id": "dr_35y",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_35z",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单号",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "XSDD-WZGS-20260926-031",
+                              "id": "dr_360"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_361",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "类型",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#334155",
+                              "content": "销售订单",
+                              "id": "dr_362"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-客户",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_363",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "客户",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1E293B",
+                              "content": "中铁四局集团有限公司",
+                              "id": "dr_364"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_365",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "合同",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "2026-WZ-061 (高铁站二标)",
+                              "id": "dr_366"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_367",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 640,000",
+                              "id": "dr_368"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_369",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "经办人",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#475569",
+                              "content": "李思远",
+                              "id": "dr_36a"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36b",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "时间",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#94A3B8",
+                              "content": "09-26 11:00",
+                              "id": "dr_36c"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36d",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态胶囊",
+                              "padding": [
+                                3,
+                                8,
+                                3,
+                                8
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#E0F2FE",
+                              "id": "dr_36e",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "状态字",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#0284C7",
+                                  "content": "已生效",
+                                  "id": "dr_36f"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格行-XSDD-WZGS-20260925-022",
+                      "width": "fill_container",
+                      "height": 48,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        16,
+                        0,
+                        16
+                      ],
+                      "fill": "#FFFFFF",
+                      "stroke": "#F1F5F9",
+                      "strokeWidth": 1,
+                      "id": "dr_36g",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-编号",
+                          "width": 170,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36h",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单号",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "XSDD-WZGS-20260925-022",
+                              "id": "dr_36i"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-类型",
+                          "width": 90,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36j",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "类型",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#334155",
+                              "content": "销售订单",
+                              "id": "dr_36k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-客户",
+                          "width": 180,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36l",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "客户",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1E293B",
+                              "content": "苏州工业园区建投有限公司",
+                              "id": "dr_36m"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-合同",
+                          "width": 150,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36n",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "合同",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "2026-WZ-053 (产业园三期)",
+                              "id": "dr_36o"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 120,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36p",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 2,100,000",
+                              "id": "dr_36q"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-经办人",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36r",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "经办人",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#475569",
+                              "content": "张明",
+                              "id": "dr_36s"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-时间",
+                          "width": 110,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36t",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "时间",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#94A3B8",
+                              "content": "09-25 15:40",
+                              "id": "dr_36u"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_36v",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态胶囊",
+                              "padding": [
+                                3,
+                                8,
+                                3,
+                                8
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#F1F5F9",
+                              "id": "dr_36w",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "状态字",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#64748B",
+                                  "content": "已完结",
+                                  "id": "dr_36x"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "name": "微透遮罩蒙层",
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900,
+          "layout": "none",
+          "fill": "#0F172A4D",
+          "id": "dr_36y",
+          "children": []
+        },
+        {
+          "type": "frame",
+          "name": "审批核查滑出抽屉-720px",
+          "x": 720,
+          "y": 0,
+          "width": 720,
+          "height": 900,
+          "layout": "vertical",
+          "fill": "#FFFFFF",
+          "stroke": "#CBD5E1",
+          "strokeWidth": {
+            "left": 1
+          },
+          "clip": true,
+          "id": "dr_36z",
+          "children": [
+            {
+              "type": "frame",
+              "name": "抽屉顶栏",
+              "width": "fill_container",
+              "height": 56,
+              "layout": "horizontal",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "padding": [
+                0,
+                24,
+                0,
+                24
+              ],
+              "fill": "#FFFFFF",
+              "stroke": "#E2E8F0",
+              "strokeWidth": {
+                "bottom": 1
+              },
+              "id": "dr_370",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "单据标题与单号组",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 12,
+                  "id": "dr_371",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "抽屉主标题",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 16,
+                      "fontWeight": "bold",
+                      "fill": "#0F172A",
+                      "content": "商贸订单详情与审批核查",
+                      "id": "dr_372"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "单号胶囊",
+                      "padding": [
+                        3,
+                        8,
+                        3,
+                        8
+                      ],
+                      "cornerRadius": 6,
+                      "fill": "#F1F5F9",
+                      "id": "dr_373",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "单号文本",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "bold",
+                          "fill": "#0071E3",
+                          "content": "XSDD-WZGS-20260928-001",
+                          "id": "dr_374"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "待特批状态标",
+                      "padding": [
+                        3,
+                        8,
+                        3,
+                        8
+                      ],
+                      "cornerRadius": 4,
+                      "fill": "#FFF1F2",
+                      "id": "dr_375",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "状态文字",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fontWeight": "bold",
+                          "fill": "#E11D48",
+                          "content": "待特批审批 (超额预警)",
+                          "id": "dr_376"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "关闭按钮",
+                  "width": 32,
+                  "height": 32,
+                  "cornerRadius": 8,
+                  "fill": "#F1F5F9",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "id": "dr_377",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "关闭图标",
+                      "library": "lucide",
+                      "icon": "x",
+                      "width": 16,
+                      "height": 16,
+                      "fill": "#64748B",
+                      "id": "dr_378"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "抽屉滚动内容流",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "padding": [
+                16,
+                24,
+                16,
+                24
+              ],
+              "gap": 12,
+              "id": "dr_379",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "合同履约配额执行看板",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    12,
+                    16,
+                    12,
+                    16
+                  ],
+                  "cornerRadius": 10,
+                  "fill": "#F8FAFC",
+                  "stroke": "#E2E8F0",
+                  "strokeWidth": 1,
+                  "gap": 10,
+                  "id": "dr_37a",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "看板标题行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "id": "dr_37b",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "看板标题",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 13,
+                          "fontWeight": "bold",
+                          "fill": "#0F172A",
+                          "content": "关联合同履约配额动态核验 (合同号：2026-WZ-089)",
+                          "id": "dr_37c"
+                        },
+                        {
+                          "type": "text",
+                          "name": "超额预警标",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fontWeight": "bold",
+                          "fill": "#E11D48",
+                          "content": "⚠️ 合同剩余额度不足 · 触发特批流转",
+                          "id": "dr_37d"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "四项指标网格",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 10,
+                      "id": "dr_37e",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "指标-合同总金额",
+                          "width": "fill_container",
+                          "padding": [
+                            8,
+                            10,
+                            8,
+                            10
+                          ],
+                          "cornerRadius": 8,
+                          "fill": "#FFFFFF",
+                          "stroke": "#E2E8F0",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_37f",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "合同总金额",
+                              "id": "dr_37g"
+                            },
+                            {
+                              "type": "text",
+                              "name": "数值",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "¥ 5,000,000",
+                              "id": "dr_37h"
+                            },
+                            {
+                              "type": "text",
+                              "name": "脚注",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 10,
+                              "fill": "#94A3B8",
+                              "content": "合同约定额度上限",
+                              "id": "dr_37i"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "指标-累计已执行金额",
+                          "width": "fill_container",
+                          "padding": [
+                            8,
+                            10,
+                            8,
+                            10
+                          ],
+                          "cornerRadius": 8,
+                          "fill": "#FFFFFF",
+                          "stroke": "#E2E8F0",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_37j",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "累计已执行金额",
+                              "id": "dr_37k"
+                            },
+                            {
+                              "type": "text",
+                              "name": "数值",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "bold",
+                              "fill": "#64748B",
+                              "content": "¥ 4,850,000",
+                              "id": "dr_37l"
+                            },
+                            {
+                              "type": "text",
+                              "name": "脚注",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 10,
+                              "fill": "#94A3B8",
+                              "content": "历史已占用 97.0%",
+                              "id": "dr_37m"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "指标-剩余可用额度",
+                          "width": "fill_container",
+                          "padding": [
+                            8,
+                            10,
+                            8,
+                            10
+                          ],
+                          "cornerRadius": 8,
+                          "fill": "#FFFFFF",
+                          "stroke": "#E2E8F0",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_37n",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "剩余可用额度",
+                              "id": "dr_37o"
+                            },
+                            {
+                              "type": "text",
+                              "name": "数值",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "bold",
+                              "fill": "#0071E3",
+                              "content": "¥ 150,000",
+                              "id": "dr_37p"
+                            },
+                            {
+                              "type": "text",
+                              "name": "脚注",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 10,
+                              "fill": "#94A3B8",
+                              "content": "当前实际可提单余额",
+                              "id": "dr_37q"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "指标-本次申请金额",
+                          "width": "fill_container",
+                          "padding": [
+                            8,
+                            10,
+                            8,
+                            10
+                          ],
+                          "cornerRadius": 8,
+                          "fill": "#FFFFFF",
+                          "stroke": "#FECDD3",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_37r",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "本次申请金额",
+                              "id": "dr_37s"
+                            },
+                            {
+                              "type": "text",
+                              "name": "数值",
+                              "fontFamily": "Inter",
+                              "fontSize": 15,
+                              "fontWeight": "bold",
+                              "fill": "#E11D48",
+                              "content": "¥ 800,000",
+                              "id": "dr_37t"
+                            },
+                            {
+                              "type": "text",
+                              "name": "脚注",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 10,
+                              "fill": "#E11D48",
+                              "content": "超额差额 ¥ 650,000",
+                              "id": "dr_37u"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "经办人追加特批申报理由卡",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    12,
+                    16,
+                    12,
+                    16
+                  ],
+                  "cornerRadius": 10,
+                  "fill": "#FFFBEB",
+                  "stroke": "#FDE68A",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "id": "dr_37v",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "理由卡头",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "id": "dr_37w",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "左侧标题",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "dr_37x",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "警示图标",
+                              "library": "lucide",
+                              "icon": "shield-alert",
+                              "width": 14,
+                              "height": 14,
+                              "fill": "#D97706",
+                              "id": "dr_37y"
+                            },
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#92400E",
+                              "content": "业务经办人追加特批理由说明",
+                              "id": "dr_37z"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "提单人与时间",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#B45309",
+                          "content": "申报人：李思远 (业务一部) ｜ 申报时间：2026-09-28 10:24",
+                          "id": "dr_380"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "name": "申报说明正文",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fill": "#78350F",
+                      "content": "“经现场中建八局项目经理张总确认，科技城一号工地因工期提前追加 200 吨 HRB400E 螺纹钢。集团已就增补采购签订框架补充备忘录，为保证现场不停工，特申请本笔订单先行特批放行入库。”",
+                      "id": "dr_381"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "证明材料附件行",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 8,
+                      "id": "dr_382",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "附件图标",
+                          "library": "lucide",
+                          "icon": "paperclip",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#B45309",
+                          "id": "dr_383"
+                        },
+                        {
+                          "type": "text",
+                          "name": "附件名",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "fill": "#B45309",
+                          "content": "证明文件：科技城项目工期提前追加采购备忘录_盖章扫描件.pdf (1.8 MB) [查阅原件]",
+                          "id": "dr_384"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "单据结构化主档卡片",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    12,
+                    16,
+                    12,
+                    16
+                  ],
+                  "cornerRadius": 10,
+                  "fill": "#FFFFFF",
+                  "stroke": "#E2E8F0",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "id": "dr_385",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "主档标题",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 13,
+                      "fontWeight": "bold",
+                      "fill": "#0F172A",
+                      "content": "订单结构化主档要素 (Order Header)",
+                      "id": "dr_386"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "要素行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 16,
+                      "id": "dr_387",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "要素-单据类型",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_388",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "单据类型",
+                              "id": "dr_389"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "销售订单 (直供)",
+                              "id": "dr_38a"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "要素-关联合同编号",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_38b",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "关联合同编号",
+                              "id": "dr_38c"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "2026-WZ-089 (科技城项目)",
+                              "id": "dr_38d"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "要素-签约单位 (客户)",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_38e",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "签约单位 (客户)",
+                              "id": "dr_38f"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "中建八局第一建设有限公司",
+                              "id": "dr_38g"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "要素行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 16,
+                      "id": "dr_38h",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "要素-工程项目名称",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_38i",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "工程项目名称",
+                              "id": "dr_38j"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "苏州科技城创新产业基地一期",
+                              "id": "dr_38k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "要素-结算账期方式",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_38l",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "结算账期方式",
+                              "id": "dr_38m"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "货到 30 天电汇结算",
+                              "id": "dr_38n"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "要素-指定送货地址",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "id": "dr_38o",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "键",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#64748B",
+                              "content": "指定送货地址",
+                              "id": "dr_38p"
+                            },
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "fill": "#1E293B",
+                              "content": "苏州市虎丘区锦峰路88号一号工地门",
+                              "id": "dr_38q"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "规范物资明细卡片",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    12,
+                    16,
+                    12,
+                    16
+                  ],
+                  "cornerRadius": 10,
+                  "fill": "#FFFFFF",
+                  "stroke": "#E2E8F0",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "id": "dr_38r",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "物资明细标题",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 13,
+                      "fontWeight": "bold",
+                      "fill": "#0F172A",
+                      "content": "规范物资明细清单 (1 项规范物料)",
+                      "id": "dr_38s"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "物料表头",
+                      "width": "fill_container",
+                      "height": 34,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        8,
+                        0,
+                        8
+                      ],
+                      "fill": "#F8FAFC",
+                      "stroke": "#E2E8F0",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "id": "dr_38t",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "头-序号",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_38u",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "序号",
+                              "id": "dr_38v"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-物料编码",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_38w",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "物料编码",
+                              "id": "dr_38x"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-规范物资品名与型号规格",
+                          "width": 220,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_38y",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "规范物资品名与型号规格",
+                              "id": "dr_38z"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-数量",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_390",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "数量",
+                              "id": "dr_391"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-单位",
+                          "width": 45,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_392",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "单位",
+                              "id": "dr_393"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-含税单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_394",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "含税单价",
+                              "id": "dr_395"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-金额小计",
+                          "width": 95,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_396",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "列名",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#475569",
+                              "content": "金额小计",
+                              "id": "dr_397"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "物料数据行-1",
+                      "width": "fill_container",
+                      "height": 42,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        8,
+                        0,
+                        8
+                      ],
+                      "fill": "#FFFFFF",
+                      "stroke": "#F1F5F9",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "id": "dr_398",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-序号",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_399",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "1",
+                              "id": "dr_39a"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-编码",
+                          "width": 100,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39b",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "编码胶囊",
+                              "padding": [
+                                2,
+                                6,
+                                2,
+                                6
+                              ],
+                              "cornerRadius": 4,
+                              "fill": "#EFF6FF",
+                              "id": "dr_39c",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "值",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11,
+                                  "fontWeight": "bold",
+                                  "fill": "#0071E3",
+                                  "content": "01.01.0024",
+                                  "id": "dr_39d"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-品名规格",
+                          "width": 220,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39e",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#0F172A",
+                              "content": "螺纹钢 HRB400E Φ20mm",
+                              "id": "dr_39f"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-数量",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39g",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fill": "#0F172A",
+                              "content": "200.00",
+                              "id": "dr_39h"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单位",
+                          "width": 45,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39i",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#64748B",
+                              "content": "吨",
+                              "id": "dr_39j"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39k",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fill": "#0F172A",
+                              "content": "¥ 4,000.00",
+                              "id": "dr_39l"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 95,
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "id": "dr_39m",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "bold",
+                              "fill": "#E11D48",
+                              "content": "¥ 800,000.00",
+                              "id": "dr_39n"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "审批裁决处理区",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "padding": [
+                    12,
+                    16,
+                    12,
+                    16
+                  ],
+                  "cornerRadius": 10,
+                  "fill": "#F8FAFC",
+                  "stroke": "#CBD5E1",
+                  "strokeWidth": 1,
+                  "gap": 8,
+                  "id": "dr_39o",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "审批标题行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "id": "dr_39p",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "标题",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 13,
+                          "fontWeight": "bold",
+                          "fill": "#0F172A",
+                          "content": "审批裁决批复意见 (业务审批主管专用)",
+                          "id": "dr_39q"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "快捷审批短语",
+                      "layout": "horizontal",
+                      "gap": 6,
+                      "id": "dr_39r",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "短语胶囊",
+                          "padding": [
+                            3,
+                            8,
+                            3,
+                            8
+                          ],
+                          "cornerRadius": 4,
+                          "fill": "#FFFFFF",
+                          "stroke": "#CBD5E1",
+                          "strokeWidth": 1,
+                          "id": "dr_39s",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#475569",
+                              "content": "+ 同意并特批放行",
+                              "id": "dr_39t"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "短语胶囊",
+                          "padding": [
+                            3,
+                            8,
+                            3,
+                            8
+                          ],
+                          "cornerRadius": 4,
+                          "fill": "#FFFFFF",
+                          "stroke": "#CBD5E1",
+                          "strokeWidth": 1,
+                          "id": "dr_39u",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#475569",
+                              "content": "+ 同意但限额执行",
+                              "id": "dr_39v"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "短语胶囊",
+                          "padding": [
+                            3,
+                            8,
+                            3,
+                            8
+                          ],
+                          "cornerRadius": 4,
+                          "fill": "#FFFFFF",
+                          "stroke": "#CBD5E1",
+                          "strokeWidth": 1,
+                          "id": "dr_39w",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#475569",
+                              "content": "+ 需补签补充协议",
+                              "id": "dr_39x"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "审批意见输入框",
+                      "width": "fill_container",
+                      "padding": [
+                        8,
+                        12,
+                        8,
+                        12
+                      ],
+                      "cornerRadius": 6,
+                      "fill": "#FFFFFF",
+                      "stroke": "#CBD5E1",
+                      "strokeWidth": 1,
+                      "id": "dr_39y",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "批复内容",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#1E293B",
+                          "content": "经核实，中建八局现场保供需求属实，框架增补备忘录真实有效，准予特批放行本笔订单。请经办人在 5 个工作日内补齐正式合同补充协议并完成额度追加备案。",
+                          "id": "dr_39z"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "抽屉底部操作栏",
+              "width": "fill_container",
+              "height": 60,
+              "layout": "horizontal",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "padding": [
+                0,
+                24,
+                0,
+                24
+              ],
+              "fill": "#FFFFFF",
+              "stroke": "#E2E8F0",
+              "strokeWidth": {
+                "top": 1
+              },
+              "id": "dr_3a0",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "退回按钮",
+                  "padding": [
+                    8,
+                    16,
+                    8,
+                    16
+                  ],
+                  "cornerRadius": 8,
+                  "fill": "#F1F5F9",
+                  "stroke": "#CBD5E1",
+                  "strokeWidth": 1,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 6,
+                  "id": "dr_3a1",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "文字",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fill": "#475569",
+                      "content": "退回经办人修改",
+                      "id": "dr_3a2"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "审批右侧按钮组",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 10,
+                  "id": "dr_3a3",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "驳回作废按钮",
+                      "padding": [
+                        8,
+                        16,
+                        8,
+                        16
+                      ],
+                      "cornerRadius": 8,
+                      "fill": "#FFF1F2",
+                      "stroke": "#FDA4AF",
+                      "strokeWidth": 1,
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 6,
+                      "id": "dr_3a4",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "驳回图标",
+                          "library": "lucide",
+                          "icon": "ban",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#E11D48",
+                          "id": "dr_3a5"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "500",
+                          "fill": "#E11D48",
+                          "content": "审批驳回 (作废单据)",
+                          "id": "dr_3a6"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "审批通过按钮",
+                      "padding": [
+                        8,
+                        20,
+                        8,
+                        20
+                      ],
+                      "cornerRadius": 8,
+                      "fill": "#0071E3",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 6,
+                      "id": "dr_3a7",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "通过图标",
+                          "library": "lucide",
+                          "icon": "check",
+                          "width": 14,
+                          "height": 14,
+                          "fill": "#FFFFFF",
+                          "id": "dr_3a8"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "bold",
+                          "fill": "#FFFFFF",
+                          "content": "审批通过并生效单据",
+                          "id": "dr_3a9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

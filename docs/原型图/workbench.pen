@@ -1,0 +1,3901 @@
+{
+  "version": "2.6",
+  "children": [
+    {
+      "type": "frame",
+      "name": "全屏提单工作台",
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 900,
+      "clip": true,
+      "layout": "vertical",
+      "fill": "#F5F5F7",
+      "id": "CD1kt",
+      "children": [
+        {
+          "type": "frame",
+          "name": "全局顶栏",
+          "width": "fill_container",
+          "height": 52,
+          "fill": "#FFFFFF",
+          "stroke": "#E5E5EA",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "horizontal",
+          "alignItems": "center",
+          "justifyContent": "space_between",
+          "padding": [
+            0,
+            24
+          ],
+          "id": "xOYcq",
+          "children": [
+            {
+              "type": "frame",
+              "name": "Logo与标题组",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "gap": 10,
+              "id": "dCOSD",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "Logo标识",
+                  "width": 30,
+                  "height": 30,
+                  "cornerRadius": 8,
+                  "fill": "#0071E3",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "id": "MCpxl",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "Logo字母",
+                      "content": "TD",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "fill": "#FFFFFF",
+                      "id": "aKlDo"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "name": "系统标题",
+                  "content": "智能商贸提单助手",
+                  "fontFamily": "Noto Sans SC",
+                  "fontSize": 15,
+                  "fontWeight": "semibold",
+                  "fill": "#1D1D1F",
+                  "id": "qLQeH"
+                },
+                {
+                  "type": "frame",
+                  "name": "版本胶囊",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 12,
+                  "padding": [
+                    3,
+                    8
+                  ],
+                  "id": "F2cNt",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "版本号",
+                      "content": "TradeDoc AI 2.0",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "medium",
+                      "fill": "#86868B",
+                      "id": "ddE5Z"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "顶栏右侧组",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "gap": 14,
+              "id": "eEaZD",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "经办人标识",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 14,
+                  "padding": [
+                    4,
+                    10
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 6,
+                  "id": "jwf9m",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "用户图标",
+                      "library": "lucide",
+                      "icon": "user",
+                      "width": 13,
+                      "height": 13,
+                      "fill": "#86868B",
+                      "id": "aQuJZ"
+                    },
+                    {
+                      "type": "text",
+                      "name": "用户姓名",
+                      "content": "李强 · 物资贸易一部",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fill": "#48484A",
+                      "id": "BDgWs"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "缩小为悬浮窗控件",
+                  "fill": "#F5F5F7",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 14,
+                  "padding": [
+                    5,
+                    12
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 5,
+                  "id": "xZqEI",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "缩小图标",
+                      "library": "lucide",
+                      "icon": "minimize-2",
+                      "width": 12,
+                      "height": 12,
+                      "fill": "#0071E3",
+                      "id": "qRTdN"
+                    },
+                    {
+                      "type": "text",
+                      "name": "缩小文字",
+                      "content": "缩小为悬浮窗",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fontWeight": "medium",
+                      "fill": "#0071E3",
+                      "id": "tiDUX"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "name": "时钟",
+                  "content": "9月28日 09:30",
+                  "fontFamily": "Noto Sans SC",
+                  "fontSize": 12,
+                  "fill": "#86868B",
+                  "id": "J1Cc2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "name": "主工作台容器",
+          "width": "fill_container",
+          "height": 848,
+          "layout": "horizontal",
+          "padding": 16,
+          "gap": 16,
+          "id": "BpW9Y",
+          "children": [
+            {
+              "type": "frame",
+              "name": "左栏-多模态交互区",
+              "width": 550,
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "stroke": "#E5E5EA",
+              "strokeWidth": 1,
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "gap": 12,
+              "id": "hxGCa",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "提单模式分段控制器",
+                  "width": "fill_container",
+                  "height": 34,
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 17,
+                  "padding": 3,
+                  "layout": "horizontal",
+                  "gap": 3,
+                  "id": "NujwQ",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "分段-文本提单(选中)",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 14,
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "D33FvR",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "message-square",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#0071E3",
+                          "id": "S7xE2"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "文本对话",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "semibold",
+                          "fill": "#1D1D1F",
+                          "id": "niXtu"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "分段-单据识别",
+                      "cornerRadius": 14,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "bOoGy",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "scan",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#86868B",
+                          "id": "ziAMw"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "单据识别",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#86868B",
+                          "id": "a76HX8"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "分段-批量导入",
+                      "cornerRadius": 14,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "WIRg5",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "table",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#86868B",
+                          "id": "RapOY"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "批量导入",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#86868B",
+                          "id": "g7pBC"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "快捷引导胶囊区",
+                  "width": "fill_container",
+                  "height": 28,
+                  "layout": "horizontal",
+                  "gap": 8,
+                  "id": "u5MKyH",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "胶囊-销售",
+                      "fill": "#EFF6FF",
+                      "stroke": "#DBEAFE",
+                      "strokeWidth": 1,
+                      "cornerRadius": 14,
+                      "padding": [
+                        4,
+                        10
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "gRweM",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "sparkles",
+                          "width": 11,
+                          "height": 11,
+                          "fill": "#0071E3",
+                          "id": "bJNMC"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "新建销售订单",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fontWeight": "medium",
+                          "fill": "#0071E3",
+                          "id": "c4JNS"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "胶囊-采购",
+                      "fill": "#FFFFFF",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 14,
+                      "padding": [
+                        4,
+                        10
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "Ze2aw",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "package",
+                          "width": 11,
+                          "height": 11,
+                          "fill": "#86868B",
+                          "id": "qYLE9"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "新建采购订单",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#6E6E73",
+                          "id": "vpBr5"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "胶囊-继续",
+                      "fill": "#FFFFFF",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 14,
+                      "padding": [
+                        4,
+                        10
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "twgQB",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "rotate-ccw",
+                          "width": 11,
+                          "height": 11,
+                          "fill": "#86868B",
+                          "id": "mKKR0"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "继续上次草稿",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#6E6E73",
+                          "id": "b1Dnyz"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "对话交互流",
+                  "width": "fill_container",
+                  "height": 520,
+                  "fill": "#FBFBFD",
+                  "stroke": "#F2F2F7",
+                  "strokeWidth": 1,
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "padding": 14,
+                  "gap": 12,
+                  "clip": true,
+                  "id": "ko1wY",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "指引卡片",
+                      "width": "fill_container",
+                      "fill": "#F5F5F7",
+                      "cornerRadius": 8,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 6,
+                      "id": "GzPNl",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "info",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#86868B",
+                          "id": "pSbYV"
+                        },
+                        {
+                          "type": "text",
+                          "name": "说明文字",
+                          "content": "直接输入口语化提单需求，系统自动核验关联合同、对齐标准物料并核算额度。",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#6E6E73",
+                          "id": "u1ui41"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "用户消息行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "end",
+                      "id": "cbsVq",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "用户气泡",
+                          "width": 420,
+                          "fill": "#0071E3",
+                          "cornerRadius": [
+                            14,
+                            14,
+                            3,
+                            14
+                          ],
+                          "padding": [
+                            10,
+                            14
+                          ],
+                          "layout": "vertical",
+                          "gap": 4,
+                          "id": "RFeeF",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "用户文本",
+                              "content": "给中建八局科技城项目下200吨400E 20圆钢，走2026-WZ-089合同，送到苏州科技城1号工地物资中转站。",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#FFFFFF",
+                              "lineHeight": 1.45,
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "id": "c4Qab0"
+                            },
+                            {
+                              "type": "frame",
+                              "name": "时间行",
+                              "layout": "horizontal",
+                              "justifyContent": "end",
+                              "id": "tKBGB",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "时间",
+                                  "content": "09:28",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fill": "#BFDBFE",
+                                  "id": "rLzNp"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "助手消息行",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "id": "Kc45C",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "助手头部",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "OjQgD",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "头像框",
+                              "width": 20,
+                              "height": 20,
+                              "cornerRadius": 10,
+                              "fill": "#0071E3",
+                              "layout": "horizontal",
+                              "alignItems": "center",
+                              "justifyContent": "center",
+                              "id": "bqemf",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "name": "图标",
+                                  "library": "lucide",
+                                  "icon": "sparkles",
+                                  "width": 11,
+                                  "height": 11,
+                                  "fill": "#FFFFFF",
+                                  "id": "A3vS8c"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "name": "名称",
+                              "content": "智能提单助手",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "semibold",
+                              "fill": "#1D1D1F",
+                              "id": "skO4j"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "助手内容卡片",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "stroke": "#E5E5EA",
+                          "strokeWidth": 1,
+                          "cornerRadius": [
+                            3,
+                            14,
+                            14,
+                            14
+                          ],
+                          "padding": 12,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "id": "q9xkyU",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "引导语",
+                              "content": "已完成提单要素识别与标准物料对齐，右侧已同步生成订单草稿：",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#1D1D1F",
+                              "id": "GHrtI"
+                            },
+                            {
+                              "type": "frame",
+                              "name": "业务要素识别摘要",
+                              "width": "fill_container",
+                              "fill": "#F5F5F7",
+                              "cornerRadius": 8,
+                              "padding": 10,
+                              "layout": "vertical",
+                              "gap": 5,
+                              "id": "iLDiq",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "合同与项目",
+                                  "content": "• 关联合同：2026-WZ-089 ｜ 工程项目：科技城数字经济产业园一期",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fill": "#48484A",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "id": "rycG0"
+                                },
+                                {
+                                  "type": "text",
+                                  "name": "物料规格",
+                                  "content": "• 物料校准：热轧带肋钢筋 HRB400E Φ20mm（编码 STL-RB-400E-20，数量 200 吨）",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "medium",
+                                  "fill": "#0071E3",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "id": "FTwFX"
+                                },
+                                {
+                                  "type": "text",
+                                  "name": "额度核算",
+                                  "content": "• 履约核验：订单金额 ¥800,000 超出合同剩余可用额度，已自动转为待特批草稿",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "medium",
+                                  "fill": "#E11D48",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "id": "v4bzI8"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "底部输入卡片",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#F5F5F7",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 12,
+                  "padding": [
+                    10,
+                    12
+                  ],
+                  "layout": "vertical",
+                  "justifyContent": "space_between",
+                  "id": "D0aQf",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "输入占位",
+                      "content": "输入提单需求或微调指令（如：交期调整至明天、追加 50 吨等）...",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fill": "#86868B",
+                      "id": "Y71fg"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "输入操作栏",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "id": "lEMV0",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "工具图标组",
+                          "layout": "horizontal",
+                          "gap": 6,
+                          "id": "sH46o",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "附件按钮",
+                              "fill": "#FFFFFF",
+                              "stroke": "#E5E5EA",
+                              "strokeWidth": 1,
+                              "cornerRadius": 6,
+                              "padding": [
+                                3,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "alignItems": "center",
+                              "gap": 3,
+                              "id": "xrH3B",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "name": "图标",
+                                  "library": "lucide",
+                                  "icon": "paperclip",
+                                  "width": 11,
+                                  "height": 11,
+                                  "fill": "#6E6E73",
+                                  "id": "c3zSJ"
+                                },
+                                {
+                                  "type": "text",
+                                  "name": "文字",
+                                  "content": "上传附件",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 10,
+                                  "fill": "#6E6E73",
+                                  "id": "Y2DGT2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "name": "语音按钮",
+                              "fill": "#FFFFFF",
+                              "stroke": "#E5E5EA",
+                              "strokeWidth": 1,
+                              "cornerRadius": 6,
+                              "padding": [
+                                3,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "alignItems": "center",
+                              "gap": 3,
+                              "id": "mg7Lc",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "name": "图标",
+                                  "library": "lucide",
+                                  "icon": "mic",
+                                  "width": 11,
+                                  "height": 11,
+                                  "fill": "#6E6E73",
+                                  "id": "a7o7D"
+                                },
+                                {
+                                  "type": "text",
+                                  "name": "文字",
+                                  "content": "语音",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 10,
+                                  "fill": "#6E6E73",
+                                  "id": "gGJXn"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "发送按钮",
+                          "fill": "#0071E3",
+                          "cornerRadius": 14,
+                          "padding": [
+                            5,
+                            14
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "Ien92",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "发送文字",
+                              "content": "发送 ↵",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "semibold",
+                              "fill": "#FFFFFF",
+                              "id": "mku0O"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "右栏-草稿预览与履约核验区",
+              "width": 842,
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "stroke": "#E5E5EA",
+              "strokeWidth": 1,
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "gap": 12,
+              "id": "riyKd",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "草稿顶栏",
+                  "width": "fill_container",
+                  "height": 32,
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "z1sOP",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "标题组",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 8,
+                      "id": "xueDp",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "草稿标题",
+                          "content": "订单草稿明细",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 15,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "m61epm"
+                        },
+                        {
+                          "type": "text",
+                          "name": "流水号",
+                          "content": "单号：TMP-20260928-001",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "K3iCnn"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "状态组",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 10,
+                      "id": "g6ygt",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "同步信息",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "s78knM",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "check",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "#34C759",
+                              "id": "B1htNX"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "已实时同步",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "QwTti"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "状态胶囊",
+                          "fill": "#FFF1F2",
+                          "stroke": "#FECDD3",
+                          "strokeWidth": 1,
+                          "cornerRadius": 12,
+                          "padding": [
+                            3,
+                            10
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "Ib6gO",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "bell",
+                              "width": 11,
+                              "height": 11,
+                              "fill": "#E11D48",
+                              "id": "i5YzbV"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "待特批 · 超额预警",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "semibold",
+                              "fill": "#E11D48",
+                              "id": "lt9i1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "合同履约4项指标看板",
+                  "width": "fill_container",
+                  "height": 82,
+                  "layout": "horizontal",
+                  "gap": 10,
+                  "id": "Y0cjV0",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "指标-合同总金额",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "Lk76I",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "VNaLv",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "合同总金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "MvRag"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 5,000,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "p8jqh"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "编号 2026-WZ-089",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "EIKOy"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标-累计已执行金额",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "PpFFW",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "yhXgr",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "累计已执行金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "Rcpcm"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 4,850,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "vxQxg"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "历史已生效 18 笔",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "x4540"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标-剩余可用额度",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#FFF5F5",
+                      "stroke": "#FDA4AF",
+                      "strokeWidth": 1.5,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "iRrCQ",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "CUlte",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "剩余可用额度",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#9F1239",
+                              "id": "IwHnt"
+                            },
+                            {
+                              "type": "icon",
+                              "name": "预警标",
+                              "library": "lucide",
+                              "icon": "bell",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "#E11D48",
+                              "id": "afosv"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 150,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#E11D48",
+                          "id": "SkUG2"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "本次申请 ¥800,000 (超额)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#E11D48",
+                          "id": "wvrb1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标-剩余可下单数",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "HFs6M",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "wmwhc",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "剩余可下单数",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "Hnx1W"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "2 笔",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "joO5T"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "上限 20 笔 / 已下 18 笔",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "UnBOx"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "超额预警横幅",
+                  "width": "fill_container",
+                  "height": 52,
+                  "fill": "#FFF5F5",
+                  "stroke": "#FECDD3",
+                  "strokeWidth": 1,
+                  "cornerRadius": 10,
+                  "padding": [
+                    8,
+                    14
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 10,
+                  "id": "s6tKVf",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "警告图标",
+                      "library": "lucide",
+                      "icon": "shield-alert",
+                      "width": 18,
+                      "height": 18,
+                      "fill": "#E11D48",
+                      "id": "w1IdN"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "警告文字纵列",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "id": "sm3NA",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标题行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 8,
+                          "id": "HrQwb",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "合同履约超额预警",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#9F1239",
+                              "id": "WxqLd"
+                            },
+                            {
+                              "type": "frame",
+                              "name": "差额胶囊",
+                              "fill": "#FFE4E6",
+                              "cornerRadius": 4,
+                              "padding": [
+                                1,
+                                6
+                              ],
+                              "id": "YmmwC",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "差额文本",
+                                  "content": "超额差额 ¥650,000 (+433%)",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "semibold",
+                                  "fill": "#9F1239",
+                                  "id": "qDgcd"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "警告说明",
+                          "content": "本次申请金额 ¥800,000 超过剩余额度 ¥150,000，常规提单通道已锁定，须录入说明转特批审批流。",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#9F1239",
+                          "id": "b1rEf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "主档要素卡片",
+                  "width": "fill_container",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 10,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "layout": "vertical",
+                  "gap": 6,
+                  "id": "AeALP",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "要素行1",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 20,
+                      "id": "sSJNQ",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "单据类型",
+                          "content": "单据业务：销售订单 (SALES)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#1D1D1F",
+                          "id": "lv0P1"
+                        },
+                        {
+                          "type": "text",
+                          "name": "签约单位",
+                          "content": "签约单位：中建八局第一建设有限公司",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "V37cSt"
+                        },
+                        {
+                          "type": "text",
+                          "name": "工程项目",
+                          "content": "工程项目：科技城数字经济产业园一期",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "MemR4"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "要素行2",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 20,
+                      "id": "MFBgm",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "送货地址",
+                          "content": "交货地址：苏州市高新区科技城 1 号工地物资中转站",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "cgO3b"
+                        },
+                        {
+                          "type": "text",
+                          "name": "采购模式",
+                          "content": "业务模式：国内传统贸易 · 直发",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "vACah"
+                        },
+                        {
+                          "type": "text",
+                          "name": "经办人",
+                          "content": "经办主体：李强 (物资贸易一部)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "c4dCx"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "物资明细卡片",
+                  "width": "fill_container",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 10,
+                  "clip": true,
+                  "layout": "vertical",
+                  "id": "yGRjO",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "表头",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "id": "KSFM1",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "头-序号",
+                          "width": 35,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "NgsW9",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "序号",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "IBsQm"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-物料编码",
+                          "width": 130,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "z9JTR",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "物料编码",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "P3tBEZ"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-规范品名规格",
+                          "width": 230,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "E0iktb",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "规范品名规格",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "ziBcI"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-数量",
+                          "width": 75,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "Qewjj",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "数量",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "wW3L3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-单位",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "GSxxy",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "单位",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "gZnU4"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-含税单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "nAZuC",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "含税单价",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "Wzwo0"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-金额",
+                          "width": 105,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "i0lYVa",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "VH9D3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头-状态",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "Q8XefB",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "状态",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "bFUTe"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "数据行1",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#FFFFFF",
+                      "stroke": "#F5F5F7",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "id": "BxJIs",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-序号",
+                          "width": 35,
+                          "layout": "horizontal",
+                          "id": "SrBuw",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "content": "1",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "Vf5h7"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-编码",
+                          "width": 130,
+                          "layout": "horizontal",
+                          "id": "CkzeA",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "编码底色",
+                              "fill": "#EFF6FF",
+                              "cornerRadius": 4,
+                              "padding": [
+                                2,
+                                6
+                              ],
+                              "id": "LC3iK",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "编码",
+                                  "content": "STL-RB-400E-20",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "semibold",
+                                  "fill": "#0071E3",
+                                  "id": "fdMTq"
+                                }
+                              ],
+                              "layout": "horizontal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-品名规格",
+                          "width": 230,
+                          "layout": "horizontal",
+                          "id": "uXisF",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "品名",
+                              "content": "热轧带肋钢筋 HRB400E Φ20mm",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#1D1D1F",
+                              "id": "LppJZ"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-数量",
+                          "width": 75,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "WnjQ9",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "数量",
+                              "content": "200.000",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#1D1D1F",
+                              "id": "aKTPB"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单位",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "EclSL",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单位",
+                              "content": "吨",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "jfQFz"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "KcFMG",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单价",
+                              "content": "¥ 4,000.00",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#48484A",
+                              "id": "c7679"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 105,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "II6Fr",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "content": "¥ 800,000.00",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#E11D48",
+                              "id": "dl5w2"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "QYf8K",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态标",
+                              "fill": "#F0FDF4",
+                              "cornerRadius": 4,
+                              "padding": [
+                                2,
+                                6
+                              ],
+                              "id": "q25E0",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "文本",
+                                  "content": "已校准规范",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 10,
+                                  "fontWeight": "medium",
+                                  "fill": "#16A34A",
+                                  "id": "bcBsm"
+                                }
+                              ],
+                              "layout": "horizontal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格汇总",
+                      "width": "fill_container",
+                      "height": 36,
+                      "fill": "#FAFAFC",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        14
+                      ],
+                      "id": "Y3jzU3",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "汇总信息",
+                          "content": "共 1 项物资明细 · 累计总量 200.000 吨",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "UoFbf"
+                        },
+                        {
+                          "type": "text",
+                          "name": "合计金额",
+                          "content": "本次订单核算金额：¥ 800,000.00 (含税)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "A9AY0"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "特批说明卡片",
+                  "width": "fill_container",
+                  "fill": "#FFFBEB",
+                  "stroke": "#FDE68A",
+                  "strokeWidth": 1,
+                  "cornerRadius": 10,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "layout": "vertical",
+                  "gap": 5,
+                  "id": "LUSfp",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "标题行",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "lDMDj",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "pencil",
+                          "width": 12,
+                          "height": 12,
+                          "fill": "#92400E",
+                          "id": "aT2sQ"
+                        },
+                        {
+                          "type": "text",
+                          "name": "标题",
+                          "content": "追加特批说明备注（超额提单必填，不少于 10 字）：",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fontWeight": "semibold",
+                          "fill": "#92400E",
+                          "id": "K78iZ"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "输入框",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "stroke": "#FCD34D",
+                      "strokeWidth": 1,
+                      "cornerRadius": 6,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "layout": "vertical",
+                      "id": "r5ODn",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "文本",
+                          "content": "经现场中建八局项目经理张总紧急确认，科技城一号工地因工期提前追加 200 吨螺纹钢，超额差额 ¥650,000 已报商务主管知悉，特申请超额特批流转。",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#451A03",
+                          "lineHeight": 1.4,
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "id": "YhSDj"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "草稿底部操作栏",
+                  "width": "fill_container",
+                  "height": 44,
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "SmWOT",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "暂存草稿按钮",
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 8,
+                      "padding": [
+                        7,
+                        16
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "h1y6dS",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "save",
+                          "width": 12,
+                          "height": 12,
+                          "fill": "#48484A",
+                          "id": "k2lyOe"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "暂存当前草稿",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#1D1D1F",
+                          "id": "lKTbN"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "提交按钮组",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 10,
+                      "id": "TFlTx",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "一键提单禁用",
+                          "fill": "#F5F5F7",
+                          "stroke": "#E5E5EA",
+                          "strokeWidth": 1,
+                          "cornerRadius": 8,
+                          "padding": [
+                            7,
+                            14
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "AJBr6",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "ban",
+                              "width": 12,
+                              "height": 12,
+                              "fill": "#AEAEB2",
+                              "id": "T30tQo"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "一键提单 (额度超限)",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fill": "#AEAEB2",
+                              "id": "S5kQQU"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "提交特批申请",
+                          "fill": "#E11D48",
+                          "cornerRadius": 8,
+                          "padding": [
+                            8,
+                            20
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "P3wcEw",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "send",
+                              "width": 13,
+                              "height": 13,
+                              "fill": "#FFFFFF",
+                              "id": "C3fs2v"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "提交特批申请审批",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "semibold",
+                              "fill": "#FFFFFF",
+                              "id": "f8U3F"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "name": "全屏提单工作台-单据OCR识别态",
+      "x": 1520,
+      "y": 0,
+      "width": 1440,
+      "height": 900,
+      "clip": true,
+      "layout": "vertical",
+      "fill": "#F5F5F7",
+      "id": "YoQXh",
+      "children": [
+        {
+          "type": "frame",
+          "name": "全局顶栏-S2",
+          "width": "fill_container",
+          "height": 52,
+          "fill": "#FFFFFF",
+          "stroke": "#E5E5EA",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "horizontal",
+          "alignItems": "center",
+          "justifyContent": "space_between",
+          "padding": [
+            0,
+            24
+          ],
+          "id": "IZyoy",
+          "children": [
+            {
+              "type": "frame",
+              "name": "Logo与标题组-S2",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "gap": 10,
+              "id": "uHq9o",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "Logo标识-S2",
+                  "width": 30,
+                  "height": 30,
+                  "cornerRadius": 8,
+                  "fill": "#0071E3",
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "id": "Mks0B",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "Logo字母-S2",
+                      "content": "TD",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "fill": "#FFFFFF",
+                      "id": "W7b3U"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "name": "系统标题-S2",
+                  "content": "智能商贸提单助手",
+                  "fontFamily": "Noto Sans SC",
+                  "fontSize": 15,
+                  "fontWeight": "semibold",
+                  "fill": "#1D1D1F",
+                  "id": "sFIOO"
+                },
+                {
+                  "type": "frame",
+                  "name": "版本胶囊-S2",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 12,
+                  "padding": [
+                    3,
+                    8
+                  ],
+                  "layout": "horizontal",
+                  "id": "Bemry",
+                  "children": [
+                    {
+                      "type": "text",
+                      "name": "版本号-S2",
+                      "content": "TradeDoc AI 2.0",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "medium",
+                      "fill": "#86868B",
+                      "id": "pmYf7"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "顶栏右侧组-S2",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "gap": 14,
+              "id": "rgR15",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "经办人标识-S2",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 14,
+                  "padding": [
+                    4,
+                    10
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 6,
+                  "id": "B9d9NS",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "用户图标-S2",
+                      "library": "lucide",
+                      "icon": "user",
+                      "width": 13,
+                      "height": 13,
+                      "fill": "#86868B",
+                      "id": "IzbWo"
+                    },
+                    {
+                      "type": "text",
+                      "name": "用户姓名-S2",
+                      "content": "李强 · 物资贸易一部",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fill": "#48484A",
+                      "id": "r47C09"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "缩小为悬浮窗控件-S2",
+                  "fill": "#F5F5F7",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 14,
+                  "padding": [
+                    5,
+                    12
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 5,
+                  "id": "tUvLc",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "缩小图标-S2",
+                      "library": "lucide",
+                      "icon": "minimize-2",
+                      "width": 12,
+                      "height": 12,
+                      "fill": "#0071E3",
+                      "id": "G5BBA"
+                    },
+                    {
+                      "type": "text",
+                      "name": "缩小文字-S2",
+                      "content": "缩小为悬浮窗",
+                      "fontFamily": "Noto Sans SC",
+                      "fontSize": 12,
+                      "fontWeight": "medium",
+                      "fill": "#0071E3",
+                      "id": "ogitR"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "name": "时钟-S2",
+                  "content": "9月28日 09:35",
+                  "fontFamily": "Noto Sans SC",
+                  "fontSize": 12,
+                  "fill": "#86868B",
+                  "id": "ozb8C"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "name": "主工作台容器-S2",
+          "width": "fill_container",
+          "height": 848,
+          "layout": "horizontal",
+          "padding": 16,
+          "gap": 16,
+          "id": "GUARm",
+          "children": [
+            {
+              "type": "frame",
+              "name": "左栏-单据识别区",
+              "width": 550,
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "stroke": "#E5E5EA",
+              "strokeWidth": 1,
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "gap": 12,
+              "id": "HZrzP",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "提单模式分段控制器-S2",
+                  "width": "fill_container",
+                  "height": 34,
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 17,
+                  "padding": 3,
+                  "layout": "horizontal",
+                  "gap": 3,
+                  "id": "h37XCK",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "分段-文本",
+                      "cornerRadius": 14,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "ORqvk",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "message-square",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#86868B",
+                          "id": "v1XKPy"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "文本对话",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#86868B",
+                          "id": "Og9TL"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "分段-单据识别(选中)",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 14,
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "ba3vP",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "scan",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#0071E3",
+                          "id": "r5N7t"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "单据识别",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "semibold",
+                          "fill": "#1D1D1F",
+                          "id": "eVwFJ"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "分段-批量",
+                      "cornerRadius": 14,
+                      "padding": [
+                        5,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "kKfyZ",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "table",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#86868B",
+                          "id": "faqro"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "批量导入",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#86868B",
+                          "id": "M9CnSF"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "单据凭证预览卡片",
+                  "width": "fill_container",
+                  "height": 290,
+                  "fill": "#FBFBFD",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "padding": 12,
+                  "gap": 10,
+                  "id": "xlDUX",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "凭证标题行",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "id": "skwbB",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "左侧信息",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "R0iJR",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "file-text",
+                              "width": 14,
+                              "height": 14,
+                              "fill": "#0071E3",
+                              "id": "nPoVu"
+                            },
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "现场发货签收磅单原件",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "semibold",
+                              "fill": "#1D1D1F",
+                              "id": "ZPeHn"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "置信度标签",
+                          "fill": "#F0FDF4",
+                          "stroke": "#DCFCE7",
+                          "strokeWidth": 1,
+                          "cornerRadius": 12,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "cAXVo",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "check",
+                              "width": 11,
+                              "height": 11,
+                              "fill": "#16A34A",
+                              "id": "wxjAw"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "结构化识别率 99.2%",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 10,
+                              "fontWeight": "medium",
+                              "fill": "#16A34A",
+                              "id": "KnQTx"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "模拟单据画框",
+                      "width": "fill_container",
+                      "height": 220,
+                      "fill": "#FFFFFF",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 8,
+                      "layout": "vertical",
+                      "padding": 12,
+                      "gap": 8,
+                      "id": "WO9QS",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "单据表头",
+                          "width": "fill_container",
+                          "layout": "horizontal",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "id": "T7Pz7A",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单据名",
+                              "content": "大宗物资现场发货签收磅单 (实拍回执)",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#1E293B",
+                              "id": "JRdNH"
+                            },
+                            {
+                              "type": "text",
+                              "name": "磅单号",
+                              "content": "NO. BD-20260928-883",
+                              "fontFamily": "Inter",
+                              "fontSize": 10,
+                              "fill": "#86868B",
+                              "id": "pO0Pk"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "识别提取高亮网格",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 6,
+                          "id": "A6gKO",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "网格行1",
+                              "fill": "#EFF6FF",
+                              "cornerRadius": 4,
+                              "padding": [
+                                4,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "gap": 12,
+                              "id": "ghS4h",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "文本1",
+                                  "content": "收货单位：中铁十二局集团有限公司（苏州轨交8号线3标）",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fill": "#0071E3",
+                                  "id": "ARtjw"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "name": "网格行2",
+                              "fill": "#F5F5F7",
+                              "cornerRadius": 4,
+                              "padding": [
+                                4,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "gap": 12,
+                              "id": "CfRVu",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "文本2",
+                                  "content": "关联合同：2026-WZ-090 ｜ 签约主体：中铁十二局集团有限公司",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fill": "#48484A",
+                                  "id": "C4euGS"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "name": "网格行3",
+                              "fill": "#F0FDF4",
+                              "cornerRadius": 4,
+                              "padding": [
+                                4,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "gap": 12,
+                              "id": "Tmaas",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "文本3",
+                                  "content": "手写俗称【42.5 水泥 散装】 -> 已自动校准为标准品名【普通硅酸盐水泥 P.O 42.5 散装】",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fontWeight": "medium",
+                                  "fill": "#16A34A",
+                                  "id": "V3OjpW"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "name": "网格行4",
+                              "fill": "#F5F5F7",
+                              "cornerRadius": 4,
+                              "padding": [
+                                4,
+                                8
+                              ],
+                              "layout": "horizontal",
+                              "justifyContent": "space_between",
+                              "id": "d7Cevh",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "净重",
+                                  "content": "磅房净重：500.000 吨 ｜ 计量单位：吨",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fill": "#1D1D1F",
+                                  "id": "EeyUO"
+                                },
+                                {
+                                  "type": "text",
+                                  "name": "签收人",
+                                  "content": "签收人：王工（现场监理已核章）",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 11,
+                                  "fill": "#86868B",
+                                  "id": "fAfXE"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "物料语义对齐卡片",
+                  "width": "fill_container",
+                  "height": 290,
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "padding": 14,
+                  "gap": 10,
+                  "id": "sYuUX",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "标题行",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 6,
+                      "id": "CLLFe",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "check-circle",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#0071E3",
+                          "id": "G24Rk"
+                        },
+                        {
+                          "type": "text",
+                          "name": "标题",
+                          "content": "标准物料库校准结果",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "semibold",
+                          "fill": "#1D1D1F",
+                          "id": "Y8m7Q"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "物料比对卡",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 8,
+                      "padding": 10,
+                      "layout": "vertical",
+                      "gap": 6,
+                      "id": "X38Ne",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "原始值",
+                          "content": "现场凭证记录：42.5 水泥散装 ｜ 500 吨",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "w2Gysw"
+                        },
+                        {
+                          "type": "frame",
+                          "name": "对齐行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "r8740",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "箭头",
+                              "content": "↳ 规范匹配：",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#0071E3",
+                              "id": "ccIAu"
+                            },
+                            {
+                              "type": "frame",
+                              "name": "编码标签",
+                              "fill": "#EFF6FF",
+                              "cornerRadius": 4,
+                              "padding": [
+                                2,
+                                6
+                              ],
+                              "layout": "horizontal",
+                              "id": "lH3tD",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "编码",
+                                  "content": "CEM-PC-425",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "bold",
+                                  "fill": "#0071E3",
+                                  "id": "x6lWpA"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "name": "规范名",
+                              "content": "普通硅酸盐水泥 P.O 42.5 散装",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#1D1D1F",
+                              "id": "Z5P2Yj"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "基准价格",
+                          "content": "公允合同单价：¥ 440.00 / 吨 ｜ 本次金额：¥ 220,000.00",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "oeny2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "重新上传行",
+                  "width": "fill_container",
+                  "height": 48,
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "mxWfT",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "重传按钮",
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 8,
+                      "padding": [
+                        7,
+                        14
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "idV4n",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "scan",
+                          "width": 12,
+                          "height": 12,
+                          "fill": "#48484A",
+                          "id": "V2Ivc"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "重新拍摄或更换单据",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#1D1D1F",
+                          "id": "LRKFI"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "确认载入草稿按钮",
+                      "fill": "#0071E3",
+                      "cornerRadius": 8,
+                      "padding": [
+                        8,
+                        18
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 5,
+                      "id": "nSGBx",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "check",
+                          "width": 13,
+                          "height": 13,
+                          "fill": "#FFFFFF",
+                          "id": "uX6Ya"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "已自动载入右侧草稿",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "semibold",
+                          "fill": "#FFFFFF",
+                          "id": "enyI7"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "name": "右栏-额度合规草稿预览",
+              "width": 842,
+              "height": "fill_container",
+              "fill": "#FFFFFF",
+              "stroke": "#E5E5EA",
+              "strokeWidth": 1,
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "padding": 16,
+              "gap": 12,
+              "id": "B6DoDL",
+              "children": [
+                {
+                  "type": "frame",
+                  "name": "草稿顶栏-S2",
+                  "width": "fill_container",
+                  "height": 32,
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "t3lTkM",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "标题组-S2",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 8,
+                      "id": "PsezF",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "草稿标题",
+                          "content": "订单草稿明细 (采购订单)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 15,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "MvRpB"
+                        },
+                        {
+                          "type": "text",
+                          "name": "流水号",
+                          "content": "单号：TMP-20260928-002",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "ZOEf5"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "状态组-S2",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 10,
+                      "id": "T2g8cN",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "合规状态胶囊",
+                          "fill": "#F0FDF4",
+                          "stroke": "#DCFCE7",
+                          "strokeWidth": 1,
+                          "cornerRadius": 12,
+                          "padding": [
+                            3,
+                            10
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 4,
+                          "id": "xho94",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "check",
+                              "width": 11,
+                              "height": 11,
+                              "fill": "#16A34A",
+                              "id": "W9s3u6"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "额度充足 · 可直接提单",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "semibold",
+                              "fill": "#16A34A",
+                              "id": "E79FzZ"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "合同履约看板-S2",
+                  "width": "fill_container",
+                  "height": 82,
+                  "layout": "horizontal",
+                  "gap": 10,
+                  "id": "RviPE",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "指标2-合同总金额",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "dNlIf",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "zrrOU",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "合同总金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "zcENT"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 10,000,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "FGre8"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "编号 2026-WZ-090",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "kmuPT"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标2-累计已执行金额",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "IWyMj",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "XdaDi",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "累计已执行金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "nr580"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 2,000,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "TKCzs"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "历史已下 5 笔",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "w0zs7J"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标2-剩余可用额度",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "LNP6B",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "a1TdEc",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "剩余可用额度",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "ezyEn"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "¥ 8,000,000",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "sEPeb"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "本次占用 ¥220,000 (充足)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#16A34A",
+                          "id": "KZ81R"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "指标2-剩余可下单数",
+                      "width": 195,
+                      "height": 82,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 10,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "layout": "vertical",
+                      "justifyContent": "space_between",
+                      "id": "g3UZE",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "标签行",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "space_between",
+                          "id": "o5RFeo",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标签",
+                              "content": "剩余可下单数",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "kxio0"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "name": "大数字",
+                          "content": "45 笔",
+                          "fontFamily": "Inter",
+                          "fontSize": 19,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "m0f5k"
+                        },
+                        {
+                          "type": "text",
+                          "name": "脚注",
+                          "content": "上限 50 笔 / 已下 5 笔",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 10,
+                          "fill": "#86868B",
+                          "id": "t4MsV"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "额度充足通知横幅",
+                  "width": "fill_container",
+                  "height": 52,
+                  "fill": "#F0FDF4",
+                  "stroke": "#DCFCE7",
+                  "strokeWidth": 1,
+                  "cornerRadius": 10,
+                  "padding": [
+                    8,
+                    14
+                  ],
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "gap": 10,
+                  "id": "CFZAc",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "name": "图标",
+                      "library": "lucide",
+                      "icon": "check",
+                      "width": 18,
+                      "height": 18,
+                      "fill": "#16A34A",
+                      "id": "bFfMe"
+                    },
+                    {
+                      "type": "frame",
+                      "name": "文字列",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "id": "wrKQn",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "标题",
+                          "content": "合同履约核验通过 (Quota Compliant)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "bold",
+                          "fill": "#166534",
+                          "id": "GNydW"
+                        },
+                        {
+                          "type": "text",
+                          "name": "说明",
+                          "content": "本次申请金额 ¥ 220,000.00 在合同剩余额度内，无需特批，点击‘一键正式提单’即可直接生效入库。",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#166534",
+                          "id": "guOf9"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "主档要素卡片-S2",
+                  "width": "fill_container",
+                  "fill": "#F5F5F7",
+                  "cornerRadius": 10,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "layout": "vertical",
+                  "gap": 6,
+                  "id": "Lbmp8",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "行1",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 20,
+                      "id": "E148OH",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "单据业务",
+                          "content": "单据业务：采购订单 (PURCHASE)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#1D1D1F",
+                          "id": "pK51B"
+                        },
+                        {
+                          "type": "text",
+                          "name": "关联合同",
+                          "content": "关联合同：2026-WZ-090",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "vP96U"
+                        },
+                        {
+                          "type": "text",
+                          "name": "供方单位",
+                          "content": "往来单位：中铁十二局集团有限公司",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "G6agPr"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "行2",
+                      "width": "fill_container",
+                      "layout": "horizontal",
+                      "gap": 20,
+                      "id": "F38KPB",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "项目",
+                          "content": "工程项目：苏州轨道交通 8 号线 3 标",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "qGPOC"
+                        },
+                        {
+                          "type": "text",
+                          "name": "送货地址",
+                          "content": "到货地址：苏州市工业园区标段项目部",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#48484A",
+                          "id": "ksoqK"
+                        },
+                        {
+                          "type": "text",
+                          "name": "经办主体",
+                          "content": "经办人：李强 (传统贸易 · 直发)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "BJyUx"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "物资明细卡片-S2",
+                  "width": "fill_container",
+                  "stroke": "#E5E5EA",
+                  "strokeWidth": 1,
+                  "cornerRadius": 10,
+                  "clip": true,
+                  "layout": "vertical",
+                  "id": "p9HJ4",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "表头-S2",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "id": "QUGt3",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "头2-序号",
+                          "width": 35,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "mHrfK",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "序号",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "fT2OI"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-物料编码",
+                          "width": 130,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "GDPr9",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "物料编码",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "ykJNQ"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-规范品名规格",
+                          "width": 230,
+                          "layout": "horizontal",
+                          "justifyContent": "start",
+                          "id": "ow43H",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "规范品名规格",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "m6zQ7U"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-数量",
+                          "width": 75,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "o5Iqv",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "数量",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "GKYlO"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-单位",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "dh8Qw",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "单位",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "SnzzO"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-含税单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "UGl6W",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "含税单价",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "hW6Jn"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-金额",
+                          "width": 105,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "x2mx2",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "金额",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "yClVE"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "头2-状态",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "LuoNS",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "标题",
+                              "content": "状态",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#86868B",
+                              "id": "UGLPv"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "数据行2-1",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#FFFFFF",
+                      "stroke": "#F5F5F7",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "id": "I7v3Uv",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "格-序号",
+                          "width": 35,
+                          "layout": "horizontal",
+                          "id": "FTitM",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "值",
+                              "content": "1",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "aQN1e"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-编码",
+                          "width": 130,
+                          "layout": "horizontal",
+                          "id": "s8hPw",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "编码底色",
+                              "fill": "#EFF6FF",
+                              "cornerRadius": 4,
+                              "padding": [
+                                2,
+                                6
+                              ],
+                              "layout": "horizontal",
+                              "id": "HfE5L",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "编码",
+                                  "content": "CEM-PC-425",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "semibold",
+                                  "fill": "#0071E3",
+                                  "id": "XkYIv"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-品名规格",
+                          "width": 230,
+                          "layout": "horizontal",
+                          "id": "ru9uK",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "品名",
+                              "content": "普通硅酸盐水泥 P.O 42.5 散装",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fontWeight": "medium",
+                              "fill": "#1D1D1F",
+                              "id": "wtJT4"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-数量",
+                          "width": 75,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "OjAPQ",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "数量",
+                              "content": "500.000",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fontWeight": "bold",
+                              "fill": "#1D1D1F",
+                              "id": "JHDDN"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单位",
+                          "width": 40,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "K1zRs",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单位",
+                              "content": "吨",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 11,
+                              "fill": "#86868B",
+                              "id": "PD46N"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-单价",
+                          "width": 85,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "wNs44",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "单价",
+                              "content": "¥ 440.00",
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fill": "#48484A",
+                              "id": "k9BbT"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-金额",
+                          "width": 105,
+                          "layout": "horizontal",
+                          "justifyContent": "end",
+                          "id": "ffPpP",
+                          "children": [
+                            {
+                              "type": "text",
+                              "name": "金额",
+                              "content": "¥ 220,000.00",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "bold",
+                              "fill": "#1D1D1F",
+                              "id": "BS2nx"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "name": "格-状态",
+                          "width": 80,
+                          "layout": "horizontal",
+                          "justifyContent": "center",
+                          "id": "xCOqZ",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "name": "状态标",
+                              "fill": "#F0FDF4",
+                              "cornerRadius": 4,
+                              "padding": [
+                                2,
+                                6
+                              ],
+                              "layout": "horizontal",
+                              "id": "wu6eF",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "name": "文本",
+                                  "content": "凭证已对齐",
+                                  "fontFamily": "Noto Sans SC",
+                                  "fontSize": 10,
+                                  "fontWeight": "medium",
+                                  "fill": "#16A34A",
+                                  "id": "GmYLb"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "表格汇总-S2",
+                      "width": "fill_container",
+                      "height": 36,
+                      "fill": "#FAFAFC",
+                      "layout": "horizontal",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "padding": [
+                        0,
+                        14
+                      ],
+                      "id": "RTfbP",
+                      "children": [
+                        {
+                          "type": "text",
+                          "name": "汇总信息",
+                          "content": "共 1 项物资明细 · 累计总量 500.000 吨",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 11,
+                          "fill": "#86868B",
+                          "id": "vC98J"
+                        },
+                        {
+                          "type": "text",
+                          "name": "合计金额",
+                          "content": "订单应付总额：¥ 220,000.00 (含税)",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fontWeight": "bold",
+                          "fill": "#1D1D1F",
+                          "id": "t0BK5D"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "name": "操作底栏-S2",
+                  "width": "fill_container",
+                  "height": 44,
+                  "layout": "horizontal",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "id": "rkIkJ",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "name": "暂存草稿按钮-S2",
+                      "fill": "#F5F5F7",
+                      "stroke": "#E5E5EA",
+                      "strokeWidth": 1,
+                      "cornerRadius": 8,
+                      "padding": [
+                        7,
+                        16
+                      ],
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 4,
+                      "id": "CziiT",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "name": "图标",
+                          "library": "lucide",
+                          "icon": "save",
+                          "width": 12,
+                          "height": 12,
+                          "fill": "#48484A",
+                          "id": "RWxeq"
+                        },
+                        {
+                          "type": "text",
+                          "name": "文字",
+                          "content": "暂存当前草稿",
+                          "fontFamily": "Noto Sans SC",
+                          "fontSize": 12,
+                          "fill": "#1D1D1F",
+                          "id": "eedbj"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "name": "提交操作组-S2",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "gap": 10,
+                      "id": "IA8cS",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "name": "一键正式提单按钮",
+                          "fill": "#0071E3",
+                          "cornerRadius": 8,
+                          "padding": [
+                            8,
+                            22
+                          ],
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "gap": 6,
+                          "id": "AQubn",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "name": "图标",
+                              "library": "lucide",
+                              "icon": "send",
+                              "width": 13,
+                              "height": 13,
+                              "fill": "#FFFFFF",
+                              "id": "CrNLH"
+                            },
+                            {
+                              "type": "text",
+                              "name": "文字",
+                              "content": "一键正式提单 (扣减配额并生效)",
+                              "fontFamily": "Noto Sans SC",
+                              "fontSize": 12,
+                              "fontWeight": "semibold",
+                              "fill": "#FFFFFF",
+                              "id": "H9ewGT"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
