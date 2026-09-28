@@ -17,6 +17,7 @@ try:
     from app.routers.master import router as master_router
     from app.routers.compliance import router as compliance_router
     from app.routers.parse import router as parse_router
+    from app.routers.orders import router as orders_router
     from app.services.semantic import semantic_service
 except ImportError:
     from backend.app.config import settings
@@ -26,6 +27,7 @@ except ImportError:
     from backend.app.routers.master import router as master_router
     from backend.app.routers.compliance import router as compliance_router
     from backend.app.routers.parse import router as parse_router
+    from backend.app.routers.orders import router as orders_router
     from backend.app.services.semantic import semantic_service
 
 # 配置全局日志
@@ -133,6 +135,8 @@ app.include_router(compliance_router, prefix="/api/v1/compliance", tags=["Compli
 app.include_router(compliance_router, prefix="/api/compliance", tags=["Compliance"])
 app.include_router(parse_router, prefix="/api/v1/parse", tags=["Parse"])
 app.include_router(parse_router, prefix="/api/parse", tags=["Parse"])
+app.include_router(orders_router, prefix="/api/v1/orders", tags=["Orders"])
+app.include_router(orders_router, prefix="/api/orders", tags=["Orders"])
 
 
 @app.get("/health", summary="系统健康探针")

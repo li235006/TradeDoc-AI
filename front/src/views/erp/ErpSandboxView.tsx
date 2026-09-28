@@ -9,17 +9,15 @@ import {
   AlertTriangle,
   XCircle,
   Sparkles,
-  Send,
   X,
   FileCheck,
   Check,
   RotateCcw,
-  Ban,
-  ArrowUpRight
+  Ban
 } from 'lucide-react';
 import { tradeApi } from '../../services/api';
 import { OrderRecord } from '../../types';
-import { useTradeStore } from '../../stores/useTradeStore';
+import { FloatingWidget } from '../../components/FloatingWidget';
 
 // 预设商贸中台标准基准单据
 const ENTERPRISE_SEED_ORDERS: OrderRecord[] = [
@@ -156,19 +154,13 @@ const ENTERPRISE_SEED_ORDERS: OrderRecord[] = [
 
 export const ErpSandboxView: React.FC = () => {
   const navigate = useNavigate();
-  const { setDraft } = useTradeStore();
 
   const [orders, setOrders] = useState<OrderRecord[]>(ENTERPRISE_SEED_ORDERS);
   const [loading, setLoading] = useState(false);
   const [filterKeyword, setFilterKeyword] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
 
-  // 挂载位点 1：56px 悬浮智能提单浮窗展开态
-  const [isFloatingOpen, setIsFloatingOpen] = useState(false);
-  const [quickInput, setQuickInput] = useState('');
-  const [quickParsing, setQuickParsing] = useState(false);
-
-  // 挂载位点 2：侧滑订单详情与特批审批抽屉
+  // 侧滑订单详情与特批审批抽屉
   const [selectedOrder, setSelectedOrder] = useState<OrderRecord | null>(null);
   const [approvalComment, setApprovalComment] = useState('');
   const [approving, setApproving] = useState(false);
@@ -196,24 +188,6 @@ export const ErpSandboxView: React.FC = () => {
     window.addEventListener('erp:order_refresh', handleRefresh);
     return () => window.removeEventListener('erp:order_refresh', handleRefresh);
   }, []);
-
-  // 快速提交悬浮提单解析
-  const handleQuickParse = async () => {
-    if (!quickInput.trim()) return;
-    try {
-      setQuickParsing(true);
-      const res = await tradeApi.parseChat({ text: quickInput.trim() });
-      if (res.data?.draft) {
-        setDraft(res.data.draft);
-        setIsFloatingOpen(false);
-        navigate('/workbench');
-      }
-    } catch (e: any) {
-      alert(e.message || '提单意图解析失败，请检查关联合同与物资信息');
-    } finally {
-      setQuickParsing(false);
-    }
-  };
 
   // 审批人裁决执行
   const handleApprove = async (decision: 'PASS' | 'RETURN' | 'REJECT') => {
@@ -439,75 +413,7 @@ export const ErpSandboxView: React.FC = () => {
       </div>
 
       {/* 挂载位点 1：56px 右下角常驻智能提单悬浮球与轻量展开面板 */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
-        {/* 展开式 420px 智能提单轻量浮窗 */}
-        {isFloatingOpen && (
-          <div className="w-[420px] bg-white rounded-hig-2xl shadow-hig-float border border-[#E5E5EA] overflow-hidden mb-3 animate-in fade-in slide-in-from-bottom-4 duration-200">
-            <div className="p-3.5 bg-[#0071E3] text-white flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-xs font-bold">智能提单快捷助手</span>
-              </div>
-              <button
-                onClick={() => setIsFloatingOpen(false)}
-                className="w-6 h-6 rounded-full hover:bg-white/20 flex items-center justify-center transition"
-              >
-                <X className="w-4 h-4 text-white" />
-              </button>
-            </div>
-
-            <div className="p-4 space-y-3">
-              <div className="text-xs text-[#475569]">
-                输入口语化提单指令，系统将自动对齐主数据标准物料编码与合同配额：
-              </div>
-              <textarea
-                value={quickInput}
-                onChange={(e) => setQuickInput(e.target.value)}
-                placeholder="例如：给中建八局科技城项目下200吨400E 20圆钢，走2026-WZ-089合同..."
-                rows={3}
-                className="w-full p-2.5 bg-[#F1F5F9] rounded-hig text-xs placeholder:text-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#0071E3]/20"
-              />
-
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  onClick={() => {
-                    setIsFloatingOpen(false);
-                    navigate('/workbench');
-                  }}
-                  className="text-xs text-[#0071E3] hover:underline flex items-center gap-0.5"
-                >
-                  <span>全屏完整工作台</span>
-                  <ArrowUpRight className="w-3 h-3" />
-                </button>
-                <button
-                  onClick={handleQuickParse}
-                  disabled={quickParsing || !quickInput.trim()}
-                  className="flex items-center gap-1 px-3.5 py-1.5 bg-[#0071E3] hover:bg-[#0071E3]/90 disabled:opacity-50 text-white rounded-hig text-xs font-semibold shadow-hig-sm transition"
-                >
-                  {quickParsing ? (
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <Send className="w-3.5 h-3.5" />
-                  )}
-                  <span>快速提取</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* 56px 常驻悬浮球 */}
-        <button
-          onClick={() => setIsFloatingOpen(!isFloatingOpen)}
-          className="w-14 h-14 rounded-full bg-[#0071E3] text-white shadow-hig-lg hover:shadow-hig-float hover:scale-105 active:scale-95 flex items-center justify-center transition-all duration-200 relative group"
-        >
-          <Sparkles className="w-6 h-6" />
-          <span className="absolute -top-1 -right-1 px-1.5 py-0.5 rounded-full bg-[#E11D48] text-white text-[10px] font-bold ring-2 ring-white">
-            AI
-          </span>
-          <span className="sr-only">智能提单入口</span>
-        </button>
-      </div>
+      <FloatingWidget />
 
       {/* 挂载位点 2：侧滑订单详情与特批审批抽屉 (OrderDetailDrawer) */}
       {selectedOrder && (

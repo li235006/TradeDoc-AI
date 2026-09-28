@@ -9,6 +9,8 @@ from mock_erp.data.initial_data import init_seed_data
 async def client():
     await db_manager.connect()
     if db_manager.db is not None:
+        # 清理自动化测试过程中遗留的瞬态测试订单
+        await db_manager.db.erp_orders.delete_many({"order_no": {"$regex": "^XSDD-YD-20260928"}})
         await init_seed_data(db_manager.db)
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as c:
@@ -20,7 +22,7 @@ async def client():
 async def test_ac03_initial_historical_orders_and_master_data(client):
     """AC-03: 验证中台预置的 3~5 条不同生命周期历史订单及合同/物料主数据"""
     # 1. 验证订单列表查询
-    res = await client.get("/api/erp/orders")
+    res = await client.get("/api/erp/orders?page_size=100")
     assert res.status_code == 200
     body = res.json()
     assert body["code"] == 200
